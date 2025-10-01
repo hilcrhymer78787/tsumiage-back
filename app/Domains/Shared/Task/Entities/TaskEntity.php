@@ -9,7 +9,7 @@ class TaskEntity
     public function __construct(
         private readonly int $taskId,
         private readonly string $taskName,
-        private readonly string $createdAt,
+        private readonly ?string $createdAt,
         private readonly ?int $taskSortKey,
         private readonly WorkEntity $workEntity,
     ) {}
@@ -24,7 +24,7 @@ class TaskEntity
         return $this->taskName;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }

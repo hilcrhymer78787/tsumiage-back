@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://tsumiage.magicgifted.com', 'https://stg-tsumiage.magicgifted.com', 'http://localhost:3000', 'http://localhost:3001'],
+    'allowed_origins' => ['https://tsumiage.magicgifted.com', 'https://stg-tsumiage.magicgifted.com', 'http://localhost:3000', 'http://localhost:3001', 'http://3.105.106.52'],
 
     'allowed_origins_patterns' => [],
 

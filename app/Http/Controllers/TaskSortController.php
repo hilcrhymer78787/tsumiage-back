@@ -20,7 +20,7 @@ class TaskSortController extends Controller
             $message = $this->service->sortTask($params, $request);
             return new SuccessResource($message);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

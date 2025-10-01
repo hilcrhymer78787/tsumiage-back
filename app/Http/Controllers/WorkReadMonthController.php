@@ -20,7 +20,7 @@ class WorkReadMonthController extends Controller
             $workReadMonthEntity = $this->service->workReadMonth($params, $request);
             return new WorkReadMonthResource($workReadMonthEntity);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

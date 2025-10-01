@@ -19,7 +19,7 @@ class AuthTestController extends Controller
             $loginInfoEntity = $this->service->getLoginInfoEntity();
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

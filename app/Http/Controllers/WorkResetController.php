@@ -18,7 +18,7 @@ class WorkResetController extends Controller
             $message = $this->service->resetWork($request);
             return new SuccessResource($message);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

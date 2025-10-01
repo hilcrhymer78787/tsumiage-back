@@ -20,7 +20,7 @@ class WorkCreateController extends Controller
             $message = $this->service->updateOrCreateWork($params, $request);
             return new SuccessResource($message);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

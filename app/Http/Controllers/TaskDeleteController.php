@@ -20,7 +20,7 @@ class TaskDeleteController extends Controller
             $message = $this->service->deleteTask($params, $request);
             return new SuccessResource($message);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

@@ -20,7 +20,7 @@ class TaskReadController extends Controller
             $taskReadEntity = $this->service->taskRead($params, $request);
             return new TaskReadResource($taskReadEntity);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

@@ -18,7 +18,7 @@ class UserDeleteController extends Controller
             $loginInfoEntity = $this->service->getLoginInfoEntity($request);
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

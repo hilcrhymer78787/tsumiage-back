@@ -18,7 +18,7 @@ class InvitationReadController extends Controller
             $invitationReadEntity = $this->service->invitationRead($request);
             return new InvitationReadResource($invitationReadEntity);
         } catch (Throwable $error) {
-            debugError($error);
+            // debugError($error);
             return new ErrorResource($error);
         }
     }

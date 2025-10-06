@@ -23,7 +23,7 @@ use App\Http\Controllers\InvitationUpdateController;
 use App\Http\Controllers\InvitationDeleteController;
 
 // テストルート
-Route::get('/test', fn() => ['message' => 'this is test']);
+Route::get('/test', fn() => ['message' => 'this is test1']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

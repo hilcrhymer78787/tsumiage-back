@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 
@@ -29,15 +28,15 @@ class BackupDatabaseCommand extends Command
 
         $filePath = "{$backupDir}/{$fileName}";
 
+        // SSL を無効にする場合
         $command = sprintf(
-            "mysqldump -h %s -u %s -p'%s' --skip-ssl --no-tablespaces %s > %s",
+            "mysqldump -h %s -u %s -p'%s' --ssl-mode=DISABLED --no-tablespaces %s > %s",
             escapeshellarg($host),
             escapeshellarg($username),
             addslashes($password),
             escapeshellarg($database),
             escapeshellarg($filePath)
         );
-        
 
         $this->info('Running: ' . $command);
 

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class BackupDatabaseCommand extends Command
 {
     protected $signature = 'backup:database';
-    protected $description = 'Dump the MySQL database to storage/app/backup';
+    protected $description = 'Dump the MySQL database to storage/app/backup and delete backups older than 3 days';
 
     public function handle(): int
     {
@@ -17,7 +17,7 @@ class BackupDatabaseCommand extends Command
         $username = config('database.connections.mysql.username');
         $password = config('database.connections.mysql.password');
         $host = config('database.connections.mysql.host');
-        $port = config('database.connections.mysql.port', 3306); // ポート番号を追加
+        $port = config('database.connections.mysql.port', 3306);
 
         $timestamp = Carbon::now()->format('Ymd_His');
         $fileName = "backup_{$timestamp}.sql";
@@ -29,7 +29,7 @@ class BackupDatabaseCommand extends Command
 
         $filePath = "{$backupDir}/{$fileName}";
 
-        // SSL を無効にする場合
+        // データベースバックアップ
         $command = sprintf(
             "mysqldump -h %s -P %d -u %s -p'%s' --ssl-mode=DISABLED --no-tablespaces %s > %s",
             escapeshellarg($host),
@@ -41,15 +41,26 @@ class BackupDatabaseCommand extends Command
         );
 
         $this->info('Running: ' . $command);
-
         exec($command, $output, $returnCode);
 
         if ($returnCode === 0) {
             $this->info("✅ Backup complete: {$fileName}");
-            return self::SUCCESS;
+        } else {
+            $this->error('❌ Database backup failed.');
+            return self::FAILURE;
         }
 
-        $this->error('❌ Database backup failed.');
-        return self::FAILURE;
+        // --- 古いバックアップ削除 ---
+        $files = File::files($backupDir);
+        $now = Carbon::now();
+
+        foreach ($files as $file) {
+            if ($now->diffInDays(Carbon::createFromTimestamp(File::lastModified($file))) > 3) {
+                File::delete($file);
+                $this->info("🗑 Deleted old backup: {$file->getFilename()}");
+            }
+        }
+
+        return self::SUCCESS;
     }
 }

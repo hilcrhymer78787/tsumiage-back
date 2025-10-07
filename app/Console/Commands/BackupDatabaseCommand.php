@@ -17,6 +17,7 @@ class BackupDatabaseCommand extends Command
         $username = config('database.connections.mysql.username');
         $password = config('database.connections.mysql.password');
         $host = config('database.connections.mysql.host');
+        $port = config('database.connections.mysql.port', 3306); // ポート番号を追加
 
         $timestamp = Carbon::now()->format('Ymd_His');
         $fileName = "backup_{$timestamp}.sql";
@@ -30,8 +31,9 @@ class BackupDatabaseCommand extends Command
 
         // SSL を無効にする場合
         $command = sprintf(
-            "mysqldump -h %s -u %s -p'%s' --ssl-mode=DISABLED --no-tablespaces %s > %s",
+            "mysqldump -h %s -P %d -u %s -p'%s' --ssl-mode=DISABLED --no-tablespaces %s > %s",
             escapeshellarg($host),
+            $port,
             escapeshellarg($username),
             addslashes($password),
             escapeshellarg($database),

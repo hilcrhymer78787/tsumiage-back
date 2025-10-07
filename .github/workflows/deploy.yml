@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. リポジトリチェックアウト（必要なら）
+      # 1. リポジトリチェックアウト
       - uses: actions/checkout@v3
 
       # 2. 秘密鍵を作成
@@ -17,9 +17,19 @@ jobs:
         run: echo "${{ secrets.EC2_SSH_KEY }}" > key && chmod 600 key
 
       # 3. EC2 に SSH 接続して git pull
-      - name: EC2 で git pull
+      - name: EC2 で Laravel を更新
         run: |
           ssh -i key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
             cd /var/www/html/tsumiage-back &&
-            git pull
+            
+            # 最新コードを取得
+            git pull &&
+            
+            # PHP依存パッケージを更新
+            composer install --no-interaction --prefer-dist --optimize-autoloader &&
+            
+            # キャッシュをクリア
+            php artisan config:cache &&
+            php artisan route:cache &&
+            php artisan view:cache
           "

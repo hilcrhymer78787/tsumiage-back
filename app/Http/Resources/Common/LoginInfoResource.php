@@ -21,6 +21,7 @@ class LoginInfoResource extends JsonResource
             'name' => $this->resource->getName(),
             'token' => $this->resource->getToken(),
             'user_img' => $this->resource->getUserImg(),
+            'email_verified_at' => $this->resource->getEmailVerifiedAt(),
         ];
     }
 }

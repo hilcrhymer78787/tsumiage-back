@@ -7,6 +7,7 @@ namespace App\Domains\AuthTest\Services;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\AuthTest\Queries\AuthTestQuery;
 use App\Http\Exceptions\AppHttpException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthTestService
 {
@@ -23,8 +24,9 @@ class AuthTestService
             id: $loginInfoModel->id,
             email: $loginInfoModel->email,
             name: $loginInfoModel->name,
-            token: $loginInfoModel->token,
+            token: JWTAuth::fromUser($loginInfoModel),
             userImg: $loginInfoModel->user_img,
+            emailVerifiedAt: $loginInfoModel->email_verified_at,
         );
     }
 };

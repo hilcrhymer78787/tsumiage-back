@@ -8,7 +8,7 @@ class InvitationEntity
         private readonly int $id,
         private readonly string $email,
         private readonly string $name,
-        private readonly string $userImg,
+        private readonly ?string $userImg,
         private readonly int $invitationId,
     ) {}
 
@@ -27,7 +27,7 @@ class InvitationEntity
         return $this->name;
     }
 
-    public function getUserImg(): string
+    public function getUserImg(): ?string
     {
         return $this->userImg;
     }

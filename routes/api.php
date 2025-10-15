@@ -21,6 +21,8 @@ use App\Http\Controllers\InvitationReadController;
 use App\Http\Controllers\InvitationCreateController;
 use App\Http\Controllers\InvitationUpdateController;
 use App\Http\Controllers\InvitationDeleteController;
+use App\Models\User;
+use Illuminate\Support\Facades\URL;
 
 // テストルート
 Route::get('/test', fn() => ['message' => 'this is test 1']);
@@ -28,6 +30,28 @@ Route::get('/test', fn() => ['message' => 'this is test 1']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
+    $user = User::findOrFail($id);
+
+    // URL が署名付きか確認
+    if (! URL::hasValidSignature($request)) {
+        return response()->json(['message' => '無効な認証リンクです'], 403);
+    }
+
+    // すでに認証済み
+    if ($user->hasVerifiedEmail()) {
+        return response()->json(['message' => '既にメール認証済みです'], 200);
+    }
+
+    $user->markEmailAsVerified();
+
+    return response()->json([
+        'message' => 'メール認証が完了しました',
+        'email_verified_at' => $user->email_verified_at,
+    ]);
+})->name('verification.verify');
+
 
 Route::get('/user/auth/test', [AuthTestController::class, 'index']);
 Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);

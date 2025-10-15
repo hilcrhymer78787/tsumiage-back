@@ -40,6 +40,7 @@ class UserDeleteService
             name: $loginInfoModel->name,
             token: $loginInfoModel->token,
             userImg: $loginInfoModel->user_img,
+            emailVerifiedAt: $loginInfoModel->email_verified_at,
         );
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserCreateService
 {
@@ -30,14 +31,20 @@ class UserCreateService
     }
 
     /**
-     * 新規作成処理
+     * 新規作成処理（JWT + メール認証対応）
      */
     private function createUser(UserCreateParameter $params, UserCreateRequest $request): LoginInfoEntity
     {
         $this->assertEmailUnique($params->email);
 
+        // パスワードをハッシュ化して作成
         $loginInfoModel = $this->query->createUser($params);
+
+        // ファイル保存
         $this->storeUserFile($params, $request);
+
+        // メール認証通知（非同期で通知されます）
+        $loginInfoModel->sendEmailVerificationNotification();
 
         return $this->toLoginInfoEntity($loginInfoModel);
     }
@@ -105,8 +112,9 @@ class UserCreateService
             id: $loginInfoModel->id,
             email: $loginInfoModel->email,
             name: $loginInfoModel->name,
-            token: $loginInfoModel->token,
+            token: JWTAuth::fromUser($loginInfoModel),
             userImg: $loginInfoModel->user_img,
+            emailVerifiedAt: $loginInfoModel->email_verified_at,
         );
     }
 }

@@ -17,11 +17,11 @@ class UserCreateQuery
         return User::create([
             'name'     => $params->name,
             'email'    => $params->email,
-            'password' => Hash::make($params->password), // 🔒 ハッシュ化
+            'password' => Hash::make($params->password),
             'user_img' => $params->userImg,
-            'token'    => $params->email . Str::random(100),
         ]);
     }
+    
 
     /**
      * ユーザー更新（パスワード以外）

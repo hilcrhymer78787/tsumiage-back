@@ -21,7 +21,6 @@ class UsersTableSeeder extends Seeder
                 'email'    => "user${i}@gmail.com",
                 'password' => Hash::make('password'),
                 'user_img' => "https://picsum.photos/500/300?image=${i}",
-                'token'    => "user${i}@gmail.com" . Str::random(100),
             ]);
         }
     }

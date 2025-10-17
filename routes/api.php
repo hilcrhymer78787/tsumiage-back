@@ -1,6 +1,5 @@
 <?php
 // TODO: 認証周りをlaravelのデフォルトで行い、メール確認機能をつける
-// TODO: Auth::user()でユーザーを取得する
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,12 +50,12 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
-    Route::get('/user/auth/test', [AuthTestController::class, 'index']);
-    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
-    Route::post('/user/create', [UserCreateController::class, 'index']);
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);//🔑
+    Route::get('/user/auth/test', [AuthTestController::class, 'index']);//🔑
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);//🔑
+    Route::post('/user/create', [UserCreateController::class, 'index']);//🔑
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);//🔑
 
         // task
         Route::get('/task/read', [TaskReadController::class, 'index']);

@@ -40,11 +40,13 @@ class UserCreateService
         // パスワードをハッシュ化して作成
         $loginInfoModel = $this->query->createUser($params);
 
+        // メール設定がある場合のみメール認証通知を送る
+        if (!empty(config('mail.mailers.smtp.username'))) {
+            $loginInfoModel->sendEmailVerificationNotification();
+        }
+
         // ファイル保存
         $this->storeUserFile($params, $request);
-
-        // メール認証通知（非同期で通知されます）
-        $loginInfoModel->sendEmailVerificationNotification();
 
         Auth::login($loginInfoModel);
         $request->session()->regenerate();

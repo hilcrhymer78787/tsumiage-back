@@ -9,7 +9,7 @@ class LoginInfoEntity
         private readonly string $email,
         private readonly string $name,
         private readonly ?string $userImg,
-        private readonly ?bool $emailVerifiedAt,
+        private readonly ?string $emailVerifiedAt,
     ) {}
 
     public function getId(): int
@@ -32,7 +32,7 @@ class LoginInfoEntity
         return $this->userImg;
     }
 
-    public function getEmailVerifiedAt(): ?bool
+    public function getEmailVerifiedAt(): ?string
     {
         return $this->emailVerifiedAt;
     }

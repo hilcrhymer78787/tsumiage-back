@@ -18,7 +18,7 @@ class UserCreateController extends Controller
     {
         try {
             $params = UserCreateParameter::makeParams($request->validated());
-            $loginInfoEntity = $this->service->getLoginInfoEntity($params, $request);
+            $loginInfoEntity = $this->service->upsertUser($params, $request);
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // debugError($error);

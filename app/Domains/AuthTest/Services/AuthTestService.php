@@ -16,9 +16,9 @@ class AuthTestService
         private readonly AuthTestQuery $query,
     ) {}
 
-    public function getLoginInfoEntity(Request $request): LoginInfoEntity
+    public function testAuth(Request $request): LoginInfoEntity
     {
-        $loginInfoModel = $this->query->getLoginInfoModel();
+        $loginInfoModel = $this->query->getTestUserModel();
         if (!$loginInfoModel) throw new AppHttpException(404, 'テストユーザーが見つかりませんでした');
 
         Auth::login($loginInfoModel);

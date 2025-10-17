@@ -6,7 +6,7 @@ use App\Models\User;
 
 class AuthTestQuery
 {
-    public function getLoginInfoModel(): User | null
+    public function getTestUserModel(): User | null
     {
         return User::find(1);
     }

@@ -14,7 +14,7 @@ class AuthBearerService
         private readonly LoginInfoService $loginInfoService,
     ) {}
 
-    public function getLoginInfoEntity(FormRequest $request): LoginInfoEntity
+    public function bearerAuth(FormRequest $request): LoginInfoEntity
     {
         $loginInfoModel = $this->loginInfoService->getLoginInfo($request);
 

@@ -6,7 +6,6 @@ namespace App\Domains\UserDelete\Services;
 
 use App\Domains\Shared\CheckIsExistEmail\Services\CheckIsExistEmailService;
 use App\Domains\Shared\Invitation\Queries\InvitationQuery;
-use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\UserDelete\Queries\UserDeleteQuery;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\Task\Queries\TaskQuery;
@@ -24,7 +23,7 @@ class UserDeleteService
         private readonly InvitationQuery $invitationQuery,
     ) {}
 
-    public function getLoginInfoEntity(FormRequest $request): LoginInfoEntity
+    public function deleteUser(FormRequest $request): string
     {
         $loginInfoModel = $this->loginInfoService->getLoginInfo($request);
 
@@ -33,13 +32,6 @@ class UserDeleteService
         $this->taskQuery->deleteTaskByUserId($userId);
         $this->workQuery->deleteWorkByUserId($userId);
         $this->invitationQuery->deleteInvitationByUserId($userId);
-
-        return new LoginInfoEntity(
-            id: $userId,
-            email: $loginInfoModel->email,
-            name: $loginInfoModel->name,
-            userImg: $loginInfoModel->user_img,
-            emailVerifiedAt: $loginInfoModel->email_verified_at,
-        );
+        return "ユーザーを削除しました";
     }
 }

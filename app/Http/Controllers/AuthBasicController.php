@@ -18,7 +18,7 @@ class AuthBasicController extends Controller
     {
         try {
             $params = AuthBasicParameter::makeParams($request->validated());
-            $loginInfoEntity = $this->service->getLoginInfoEntity($params, $request);
+            $loginInfoEntity = $this->service->basicAuth($params, $request);
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // // debugError($error);

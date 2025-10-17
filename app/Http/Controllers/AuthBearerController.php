@@ -15,7 +15,7 @@ class AuthBearerController extends Controller
     public function index(FormRequest $request): LoginInfoResource | ErrorResource
     {
         try {
-            $loginInfoEntity = $this->service->getLoginInfoEntity($request);
+            $loginInfoEntity = $this->service->bearerAuth($request);
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // debugError($error);

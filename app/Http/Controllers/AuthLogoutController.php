@@ -10,9 +10,7 @@ use Throwable;
 
 class AuthLogoutController extends Controller
 {
-    public function __construct(
-        private readonly AuthLogoutService $service,
-    ) {}
+    public function __construct(private readonly AuthLogoutService $service) {}
 
     public function index(FormRequest $request): SuccessResource | ErrorResource
     {

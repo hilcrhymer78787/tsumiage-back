@@ -23,7 +23,7 @@ class UserCreateService
         private readonly UserCreateQuery $query,
     ) {}
 
-    public function getLoginInfoEntity(UserCreateParameter $params, UserCreateRequest $request): LoginInfoEntity
+    public function upsertUser(UserCreateParameter $params, UserCreateRequest $request): LoginInfoEntity
     {
         return empty($params->id)
             ? $this->createUser($params, $request)

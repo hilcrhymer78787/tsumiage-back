@@ -23,7 +23,7 @@ class AuthBasicService
     /**
      * メールアドレス・パスワード認証
      */
-    public function getLoginInfoEntity(AuthBasicParameter $params, Request $request): LoginInfoEntity
+    public function basicAuth(AuthBasicParameter $params, Request $request): LoginInfoEntity
     {
         $loginInfoModel = $this->query->getLoginInfo($params);
 

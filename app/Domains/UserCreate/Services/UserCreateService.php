@@ -12,8 +12,8 @@ use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserCreateService
 {
@@ -45,6 +45,9 @@ class UserCreateService
 
         // メール認証通知（非同期で通知されます）
         $loginInfoModel->sendEmailVerificationNotification();
+
+        Auth::login($loginInfoModel);
+        $request->session()->regenerate();
 
         return $this->toLoginInfoEntity($loginInfoModel);
     }
@@ -112,7 +115,6 @@ class UserCreateService
             id: $loginInfoModel->id,
             email: $loginInfoModel->email,
             name: $loginInfoModel->name,
-            token: JWTAuth::fromUser($loginInfoModel),
             userImg: $loginInfoModel->user_img,
             emailVerifiedAt: $loginInfoModel->email_verified_at,
         );

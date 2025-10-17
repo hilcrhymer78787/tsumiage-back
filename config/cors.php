@@ -3,7 +3,7 @@
 return [
 
     // 対象のパス
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'user'],
 
     // 許可するHTTPメソッド
     'allowed_methods' => ['*'],

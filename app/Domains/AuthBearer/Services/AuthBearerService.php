@@ -22,7 +22,6 @@ class AuthBearerService
             id: $loginInfoModel->id,
             email: $loginInfoModel->email,
             name: $loginInfoModel->name,
-            token: $loginInfoModel->token,
             userImg: $loginInfoModel->user_img,
             emailVerifiedAt: $loginInfoModel->email_verified_at,
         );

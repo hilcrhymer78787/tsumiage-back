@@ -9,8 +9,9 @@ use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\AuthBasic\Queries\AuthBasicQuery;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Http\Exceptions\AppHttpException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthBasicService
 {
@@ -22,20 +23,22 @@ class AuthBasicService
     /**
      * メールアドレス・パスワード認証
      */
-    public function getLoginInfoEntity(AuthBasicParameter $params): LoginInfoEntity
+    public function getLoginInfoEntity(AuthBasicParameter $params, Request $request): LoginInfoEntity
     {
         $loginInfoModel = $this->query->getLoginInfo($params);
-        // hoge
+
         if (!$loginInfoModel) throw new AppHttpException(404, "", ['emailError' => 'このメールアドレスは登録されていません']);
 
         $isCorrect = Hash::check($params->password, $loginInfoModel->password);
         if (!$isCorrect) throw new AppHttpException(401, "", ['passwordError' => 'パスワードが間違っています']);
 
+        Auth::login($loginInfoModel);
+        $request->session()->regenerate();
+
         return new LoginInfoEntity(
             id: $loginInfoModel->id,
             email: $loginInfoModel->email,
             name: $loginInfoModel->name,
-            token: JWTAuth::fromUser($loginInfoModel),
             userImg: $loginInfoModel->user_img,
             emailVerifiedAt: $loginInfoModel->email_verified_at,
         );

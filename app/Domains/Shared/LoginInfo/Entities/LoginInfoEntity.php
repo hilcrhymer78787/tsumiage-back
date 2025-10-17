@@ -8,7 +8,6 @@ class LoginInfoEntity
         private readonly int $id,
         private readonly string $email,
         private readonly string $name,
-        private readonly ?string $token,
         private readonly ?string $userImg,
         private readonly ?bool $emailVerifiedAt,
     ) {}
@@ -26,11 +25,6 @@ class LoginInfoEntity
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
     }
 
     public function getUserImg(): ?string

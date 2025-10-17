@@ -1,14 +1,15 @@
 <?php
 // TODO: 認証周りをlaravelのデフォルトで行い、メール確認機能をつける
+// TODO: Auth::user()でユーザーを取得する
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\CheckToken;
 use App\Http\Controllers\TaskReadController;
 use App\Http\Controllers\TaskCreateController;
 use App\Http\Controllers\TaskSortController;
 use App\Http\Controllers\TaskDeleteController;
 use App\Http\Controllers\AuthTestController;
+use App\Http\Controllers\AuthLogoutController;
 use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\UserCreateController;
@@ -26,10 +27,6 @@ use Illuminate\Support\Facades\URL;
 
 // テストルート
 Route::get('/test', fn() => ['message' => 'this is test 1']);
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
     $user = User::findOrFail($id);
@@ -52,32 +49,34 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
     ]);
 })->name('verification.verify');
 
+// --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
+Route::middleware(['web'])->group(function () {
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
+    Route::get('/user/auth/test', [AuthTestController::class, 'index']);
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
+    Route::post('/user/create', [UserCreateController::class, 'index']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
 
-Route::get('/user/auth/test', [AuthTestController::class, 'index']);
-Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
-Route::post('/user/create', [UserCreateController::class, 'index']);
+        // task
+        Route::get('/task/read', [TaskReadController::class, 'index']);
+        Route::post('/task/create', [TaskCreateController::class, 'index']);
+        Route::post('/task/sort', [TaskSortController::class, 'index']);
+        Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
 
-Route::middleware([CheckToken::class])->group(function () {
+        // user
+        Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
-    // task
-    Route::get('/task/read', [TaskReadController::class, 'index']);
-    Route::post('/task/create', [TaskCreateController::class, 'index']);
-    Route::post('/task/sort', [TaskSortController::class, 'index']);
-    Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
+        // work
+        Route::get('/work/read/month', [WorkReadMonthController::class, 'index']);
+        Route::post('/work/create', [WorkCreateController::class, 'index']);
+        Route::delete('/work/delete', [WorkDeleteController::class, 'index']);
+        Route::delete('/work/reset', [WorkResetController::class, 'index']);
 
-    // user
-    Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
-    Route::delete('/user/delete', [UserDeleteController::class, 'index']);
-
-    // work
-    Route::get('/work/read/month', [WorkReadMonthController::class, 'index']);
-    Route::post('/work/create', [WorkCreateController::class, 'index']);
-    Route::delete('/work/delete', [WorkDeleteController::class, 'index']);
-    Route::delete('/work/reset', [WorkResetController::class, 'index']);
-
-    // invitation
-    Route::get('/invitation/read', [InvitationReadController::class, 'index']);
-    Route::post('/invitation/create', [InvitationCreateController::class, 'index']);
-    Route::put('/invitation/update', [InvitationUpdateController::class, 'index']);
-    Route::delete('/invitation/delete', [InvitationDeleteController::class, 'index']);
+        // invitation
+        Route::get('/invitation/read', [InvitationReadController::class, 'index']);
+        Route::post('/invitation/create', [InvitationCreateController::class, 'index']);
+        Route::put('/invitation/update', [InvitationUpdateController::class, 'index']);
+        Route::delete('/invitation/delete', [InvitationDeleteController::class, 'index']);
+    });
 });

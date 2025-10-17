@@ -2,18 +2,13 @@
 
 namespace App\Domains\Shared\LoginInfo\Services;
 
-use App\Domains\Shared\LoginInfo\Queries\LoginInfoQuery;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginInfoService
 {
-    public function __construct(
-        private readonly LoginInfoQuery $query,
-    ) {}
-
-    public function getLoginInfo(Request $request): ?User
+    public function getLoginInfo(): ?User
     {
-        return $this->query->getLoginInfo($request);
+        return Auth::user();
     }
 }

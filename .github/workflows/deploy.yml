@@ -27,6 +27,9 @@ jobs:
             
             # PHP依存パッケージを更新
             composer install --no-interaction --prefer-dist --optimize-autoloader &&
+
+            # マイグレーション実行（--force を付けないと本番では止まる）
+            php artisan migrate --force &&
             
             # キャッシュをクリア
             php artisan config:cache &&

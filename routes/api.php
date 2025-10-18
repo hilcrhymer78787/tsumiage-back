@@ -50,21 +50,24 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
+
+    // user
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);//🔑
     Route::get('/user/auth/test', [AuthTestController::class, 'index']);//🔑
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);//🔑
     Route::post('/user/create', [UserCreateController::class, 'index']);//🔑
+    
     Route::middleware(['auth:sanctum'])->group(function () {
+
+        // user
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);//🔑
+        Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task
         Route::get('/task/read', [TaskReadController::class, 'index']);
         Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']);
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
-
-        // user
-        Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // work
         Route::get('/work/read/month', [WorkReadMonthController::class, 'index']);

@@ -6,7 +6,6 @@ use App\Http\Resources\Common\ErrorResource;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Resources\Common\LoginInfoResource;
 use App\Domains\AuthBearer\Services\AuthBearerService;
-use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class AuthBearerController extends Controller
@@ -20,10 +19,6 @@ class AuthBearerController extends Controller
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // debugError($error);
-            // TODO
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
             return new ErrorResource($error);
         }
     }

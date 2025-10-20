@@ -32,7 +32,9 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 43200), # 30日（分）
+    // TODO
+    // 'lifetime' => (int) env('SESSION_LIFETIME', 43200), # 30日（分）
+    'lifetime' => (int) env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 

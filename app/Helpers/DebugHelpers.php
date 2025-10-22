@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Log;
 
+// TODO 機能してない
 if (! function_exists('debugError')) {
     function debugError(Throwable $error): void
     {

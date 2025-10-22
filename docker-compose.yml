@@ -29,7 +29,7 @@ services:
     container_name: mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_DATABASE: sample
+      MYSQL_DATABASE: tsumiage_dev
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
@@ -37,6 +37,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d  # 初期化スクリプトをマウント
     networks:
       - app-network
 

@@ -21,47 +21,24 @@ use App\Http\Controllers\WorkDeleteController;
 use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 // テストルート
-Route::get('/test', fn () => ['message' => 'this is test 1']);
-
-Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
-    $user = User::findOrFail($id);
-
-    // URL が署名付きか確認
-    if (! URL::hasValidSignature($request)) {
-        return response()->json(['message' => '無効な認証リンクです'], 403);
-    }
-
-    // すでに認証済み
-    if ($user->hasVerifiedEmail()) {
-        return response()->json(['message' => '既にメール認証済みです'], 200);
-    }
-
-    $user->markEmailAsVerified();
-
-    return response()->json([
-        'message' => 'メール認証が完了しました',
-        'email_verified_at' => $user->email_verified_at,
-    ]);
-})->name('verification.verify');
+Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
 
     // user
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🔑
-    Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🔑
-    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']); // 🔑
-    Route::post('/user/create', [UserCreateController::class, 'index']); // 🔑
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
+    Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
+    Route::post('/user/create', [UserCreateController::class, 'index']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user
-        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']); // 🔑
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task

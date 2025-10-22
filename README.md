@@ -14,6 +14,8 @@ php artisan key:generate
 
 php artisan migrate:refresh --seed
 
+php artisan migrate --env=testing
+
 
 【キャッシュクリア】
 composer dump-autoload && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear
@@ -23,3 +25,7 @@ composer dump-autoload && php artisan cache:clear && php artisan config:clear &&
 
 【test】
 php artisan test
+
+【myslq】
+docker-compose exec mysql bash
+mysql -u root -ppassword -h mysql -P 3306

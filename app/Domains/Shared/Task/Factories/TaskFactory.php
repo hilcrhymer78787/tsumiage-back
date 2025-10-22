@@ -2,7 +2,6 @@
 
 namespace App\Domains\Shared\Task\Factories;
 
-
 use App\Domains\Shared\Task\Entities\TaskEntity;
 use App\Domains\Shared\Work\Factories\WorkFactory;
 use App\Models\Task;
@@ -16,10 +15,10 @@ class TaskFactory
     public function create(Task $taskModel): TaskEntity
     {
         $work = $taskModel->work;
-        !!$workEntity = $work
+        (bool) $workEntity = $work
             ? $this->workFactory->create($work)
             : $this->workFactory->empty();
-            
+
         return new TaskEntity(
             taskId: $taskModel->task_id,
             taskName: $taskModel->task_name,

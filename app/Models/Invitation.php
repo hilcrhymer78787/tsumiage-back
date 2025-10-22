@@ -17,9 +17,9 @@ class Invitation extends Model
     ];
 
     protected $casts = [
-        'invitation_id'=>'integer',
-        'invitation_from_user_id'=>'integer',
-        'invitation_to_user_id'=>'integer',
-        'invitation_status'=>'integer',
-      ];
+        'invitation_id' => 'integer',
+        'invitation_from_user_id' => 'integer',
+        'invitation_to_user_id' => 'integer',
+        'invitation_status' => 'integer',
+    ];
 }

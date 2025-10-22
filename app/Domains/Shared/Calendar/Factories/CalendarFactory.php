@@ -2,11 +2,9 @@
 
 namespace App\Domains\Shared\Calendar\Factories;
 
-
 use App\Domains\Shared\Calendar\Entities\CalendarEntity;
 use App\Domains\Shared\Task\Entities\TaskEntity;
 use App\Domains\Shared\Work\Factories\WorkFactory;
-use Illuminate\Support\Collection;
 
 class CalendarFactory
 {

@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Http\Requests\Base\BaseFormRequest;
 
 class TaskReadRequest extends BaseFormRequest
-
 {
     public function rules(): array
     {

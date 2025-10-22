@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domains\WorkCreate\Services;
 
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\WorkCreate\Parameters\WorkCreateParameter;
 use App\Domains\WorkCreate\Queries\WorkCreateQuery;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
-use App\Http\Requests\WorkCreateRequest;
 use App\Http\Exceptions\AppHttpException;
+use App\Http\Requests\WorkCreateRequest;
 
 class WorkCreateService
 {
@@ -22,10 +22,12 @@ class WorkCreateService
         $userId = $this->loginInfoService->getLoginInfo($request)->id;
 
         $isExistMyTask = $this->query->getIsExistMyTask($params->taskId, $userId);
-        if (!$isExistMyTask) throw new AppHttpException(403, '自分のタスク以外は更新できません');
+        if (! $isExistMyTask) {
+            throw new AppHttpException(403, '自分のタスク以外は更新できません');
+        }
 
         $this->query->updateOrCreateWork($params, $userId);
 
-        return "活動情報を更新しました";
+        return '活動情報を更新しました';
     }
 }

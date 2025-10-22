@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domains\WorkReadMonth\Services;
 
-use App\Domains\WorkReadMonth\Factories\WorkReadMonthFactory;
-use App\Domains\WorkReadMonth\Parameters\WorkReadMonthParameter;
-use App\Http\Requests\WorkReadMonthRequest;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\CheckIsFriends\Services\CheckIsFriendsService;
-use App\Http\Exceptions\AppHttpException;
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\Task\Queries\TaskQuery;
 use App\Domains\Shared\Work\Queries\WorkQuery;
 use App\Domains\WorkReadMonth\Entities\WorkReadMonthEntity;
+use App\Domains\WorkReadMonth\Factories\WorkReadMonthFactory;
+use App\Domains\WorkReadMonth\Parameters\WorkReadMonthParameter;
+use App\Http\Exceptions\AppHttpException;
+use App\Http\Requests\WorkReadMonthRequest;
 
 class WorkReadMonthService
 {
@@ -35,7 +35,9 @@ class WorkReadMonthService
 
         if ($loginInfoId !== $paramsUserId) {
             $isFriends = $this->checkIsFriendsService->checkIsFriends($loginInfoId, $paramsUserId);
-            if (!$isFriends) throw new AppHttpException(403, 'このユーザは友達ではありません');
+            if (! $isFriends) {
+                throw new AppHttpException(403, 'このユーザは友達ではありません');
+            }
         }
 
         $taskModels = $this->taskQuery->getTasks($paramsUserId);
@@ -46,4 +48,4 @@ class WorkReadMonthService
 
         return $this->factory->create($calendarModels);
     }
-};
+}

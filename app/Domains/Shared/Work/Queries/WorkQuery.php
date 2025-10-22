@@ -2,9 +2,7 @@
 
 namespace App\Domains\Shared\Work\Queries;
 
-
 use App\Models\Work;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class WorkQuery
@@ -24,6 +22,7 @@ class WorkQuery
             )
             ->get();
     }
+
     public function deleteWorkByUserId(int $userId): void
     {
         Work::where('work_user_id', $userId)->delete();

@@ -26,4 +26,4 @@ class AuthBearerService
             emailVerifiedAt: $loginInfoModel->email_verified_at,
         );
     }
-};
+}

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Shared\Work\Factories;
 
-
 use App\Domains\Shared\Work\Entities\WorkEntity;
 use App\Models\Work;
 
@@ -18,11 +17,12 @@ class WorkFactory
             workState: $work->work_state,
         );
     }
+
     public function empty(): WorkEntity
     {
         return new WorkEntity(
             workId: 0,
-            workDate: "",
+            workDate: '',
             workTaskId: 0,
             workUserId: 0,
             workState: 0,

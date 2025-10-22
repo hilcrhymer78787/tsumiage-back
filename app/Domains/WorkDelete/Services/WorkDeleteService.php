@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domains\WorkDelete\Services;
 
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\WorkDelete\Parameters\WorkDeleteParameter;
 use App\Domains\WorkDelete\Queries\WorkDeleteQuery;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
-use App\Http\Requests\WorkDeleteRequest;
 use App\Http\Exceptions\AppHttpException;
+use App\Http\Requests\WorkDeleteRequest;
 
 class WorkDeleteService
 {
@@ -23,8 +23,10 @@ class WorkDeleteService
         $workId = $params->id;
 
         $num = $this->query->deleteWork($workId, $userId);
-        if (!$num) throw new AppHttpException(404, '活動情報が存在しません');
-        
-        return "活動情報を削除しました";
+        if (! $num) {
+            throw new AppHttpException(404, '活動情報が存在しません');
+        }
+
+        return '活動情報を削除しました';
     }
 }

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domains\Shared\CheckIsExistEmail\Services;
 
 use App\Domains\Shared\CheckIsExistEmail\Queries\CheckIsExistEmailQuery;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
 class CheckIsExistEmailService
 {

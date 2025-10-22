@@ -18,7 +18,7 @@ class InvitationDeleteRequest extends BaseFormRequest
         return [
             'invitation_id.integer' => 'invitation_id は整数でなければなりません。',
             'invitation_id.required' => 'invitation_id は必須です。',
-            'invitation_id.exists'   => '指定された招待情報は存在しません。',
+            'invitation_id.exists' => '指定された招待情報は存在しません。',
         ];
     }
 }

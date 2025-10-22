@@ -1,31 +1,32 @@
 <?php
+
 // TODO: 認証周りをlaravelのデフォルトで行い、メール確認機能をつける
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskReadController;
-use App\Http\Controllers\TaskCreateController;
-use App\Http\Controllers\TaskSortController;
-use App\Http\Controllers\TaskDeleteController;
-use App\Http\Controllers\AuthTestController;
-use App\Http\Controllers\AuthLogoutController;
-use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthBasicController;
+use App\Http\Controllers\AuthBearerController;
+use App\Http\Controllers\AuthLogoutController;
+use App\Http\Controllers\AuthTestController;
+use App\Http\Controllers\InvitationCreateController;
+use App\Http\Controllers\InvitationDeleteController;
+use App\Http\Controllers\InvitationReadController;
+use App\Http\Controllers\InvitationUpdateController;
+use App\Http\Controllers\TaskCreateController;
+use App\Http\Controllers\TaskDeleteController;
+use App\Http\Controllers\TaskReadController;
+use App\Http\Controllers\TaskSortController;
 use App\Http\Controllers\UserCreateController;
 use App\Http\Controllers\UserDeleteController;
-use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkCreateController;
 use App\Http\Controllers\WorkDeleteController;
+use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
-use App\Http\Controllers\InvitationReadController;
-use App\Http\Controllers\InvitationCreateController;
-use App\Http\Controllers\InvitationUpdateController;
-use App\Http\Controllers\InvitationDeleteController;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
 // テストルート
-Route::get('/test', fn() => ['message' => 'this is test 1']);
+Route::get('/test', fn () => ['message' => 'this is test 1']);
 
 Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
     $user = User::findOrFail($id);
@@ -52,15 +53,15 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
 Route::middleware(['web'])->group(function () {
 
     // user
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);//🔑
-    Route::get('/user/auth/test', [AuthTestController::class, 'index']);//🔑
-    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);//🔑
-    Route::post('/user/create', [UserCreateController::class, 'index']);//🔑
-    
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🔑
+    Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🔑
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']); // 🔑
+    Route::post('/user/create', [UserCreateController::class, 'index']); // 🔑
+
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user
-        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);//🔑
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']); // 🔑
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task

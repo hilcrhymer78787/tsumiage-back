@@ -12,8 +12,8 @@ abstract class BaseFormRequest extends FormRequest
     {
         throw new AppHttpException(
             422,
-            "バリデーションエラーが発生しました。",
-            ['errors'  => $validator->errors()]
+            'バリデーションエラーが発生しました。',
+            ['errors' => $validator->errors()]
         );
     }
 }

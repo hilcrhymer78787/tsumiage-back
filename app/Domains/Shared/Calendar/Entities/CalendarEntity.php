@@ -2,7 +2,6 @@
 
 namespace App\Domains\Shared\Calendar\Entities;
 
-use App\Domains\Shared\Task\Entities\TaskEntity;
 use Illuminate\Support\Collection;
 
 class CalendarEntity

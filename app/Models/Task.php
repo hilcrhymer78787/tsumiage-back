@@ -31,6 +31,7 @@ class Task extends Model
     {
         return $this->hasMany(Work::class, 'work_task_id', 'task_id');
     }
+
     public function work(): HasOne
     {
         return $this->hasOne(Work::class, 'work_task_id', 'task_id');

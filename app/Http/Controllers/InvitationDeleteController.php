@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Common\ErrorResource;
+use App\Domains\InvitationDelete\Parameters\InvitationDeleteParameter;
 use App\Domains\InvitationDelete\Services\InvitationDeleteService;
 use App\Http\Requests\InvitationDeleteRequest;
-use App\Domains\InvitationDelete\Parameters\InvitationDeleteParameter;
+use App\Http\Resources\Common\ErrorResource;
 use App\Http\Resources\Common\SuccessResource;
 use Throwable;
 
@@ -13,11 +13,12 @@ class InvitationDeleteController extends Controller
 {
     public function __construct(private InvitationDeleteService $service) {}
 
-    public function index(InvitationDeleteRequest $request): SuccessResource | ErrorResource
+    public function index(InvitationDeleteRequest $request): SuccessResource|ErrorResource
     {
         try {
             $params = InvitationDeleteParameter::makeParams($request->validated());
             $message = $this->service->deleteInvitation($params, $request);
+
             return new SuccessResource($message);
         } catch (Throwable $error) {
             // debugError($error);

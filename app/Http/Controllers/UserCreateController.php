@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Common\ErrorResource;
-use App\Http\Resources\Common\LoginInfoResource;
+use App\Domains\UserCreate\Parameters\UserCreateParameter;
 use App\Domains\UserCreate\Services\UserCreateService;
 use App\Http\Requests\UserCreateRequest;
-use App\Domains\UserCreate\Parameters\UserCreateParameter;
-
+use App\Http\Resources\Common\ErrorResource;
+use App\Http\Resources\Common\LoginInfoResource;
 use Throwable;
 
 class UserCreateController extends Controller
 {
     public function __construct(private UserCreateService $service) {}
 
-    public function index(UserCreateRequest $request): LoginInfoResource | ErrorResource
+    public function index(UserCreateRequest $request): LoginInfoResource|ErrorResource
     {
         try {
             $params = UserCreateParameter::makeParams($request->validated());
             $loginInfoEntity = $this->service->upsertUser($params, $request);
+
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // debugError($error);

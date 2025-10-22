@@ -15,6 +15,7 @@ class InvitationReadQuery
             ->select('id', 'email', 'name', 'user_img', 'invitation_id')
             ->get();
     }
+
     public function getNowFriends(int $loginInfoId): Collection
     {
         return Invitation::join('users', function ($join) use ($loginInfoId) {
@@ -27,6 +28,7 @@ class InvitationReadQuery
             ->select('users.id', 'users.email', 'users.name', 'users.user_img', 'invitations.invitation_id')
             ->get();
     }
+
     public function getToFriends(int $loginInfoId): Collection
     {
         return Invitation::where('invitation_from_user_id', $loginInfoId)

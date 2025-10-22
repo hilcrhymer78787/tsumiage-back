@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Resources\Common;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,6 +15,7 @@ class TaskResource extends JsonResource
     public function toArray($request)
     {
         $workEntity = $this->resource->getWorkEntity();
+
         return [
             'id' => $this->resource->getTaskId(),
             'name' => $this->resource->getTaskName(),

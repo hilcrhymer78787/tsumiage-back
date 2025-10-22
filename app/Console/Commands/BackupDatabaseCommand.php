@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Carbon\Carbon;
 
 class BackupDatabaseCommand extends Command
 {
     protected $signature = 'backup:database';
+
     protected $description = 'Dump the MySQL database to storage/app/backup and delete backups older than 3 days';
 
     public function handle(): int
@@ -23,7 +24,7 @@ class BackupDatabaseCommand extends Command
         $fileName = "backup_{$timestamp}.sql";
         $backupDir = storage_path('app/backup');
 
-        if (!File::isDirectory($backupDir)) {
+        if (! File::isDirectory($backupDir)) {
             File::makeDirectory($backupDir, 0755, true);
         }
 
@@ -40,13 +41,14 @@ class BackupDatabaseCommand extends Command
             escapeshellarg($filePath)
         );
 
-        $this->info('Running: ' . $command);
+        $this->info('Running: '.$command);
         exec($command, $output, $returnCode);
 
         if ($returnCode === 0) {
             $this->info("✅ Backup complete: {$fileName}");
         } else {
             $this->error('❌ Database backup failed.');
+
             return self::FAILURE;
         }
 

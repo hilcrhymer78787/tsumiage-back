@@ -2,8 +2,8 @@
 
 namespace App\Domains\TaskRead\Factories;
 
-use App\Domains\TaskRead\Entities\TaskReadEntity;
 use App\Domains\Shared\Task\Factories\TaskFactory;
+use App\Domains\TaskRead\Entities\TaskReadEntity;
 use App\Models\Task;
 use Illuminate\Support\Collection;
 
@@ -18,6 +18,7 @@ class TaskReadFactory
         $taskEntities = $taskModels->map(function (Task $taskModel) {
             return $this->taskFactory->create($taskModel);
         });
+
         return new TaskReadEntity($date, $taskEntities);
     }
 }

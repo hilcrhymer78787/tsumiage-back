@@ -5,7 +5,6 @@ namespace App\Domains\UserCreate\Queries;
 use App\Domains\UserCreate\Parameters\UserCreateParameter;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserCreateQuery
 {
@@ -15,13 +14,12 @@ class UserCreateQuery
     public function createUser(UserCreateParameter $params): ?User
     {
         return User::create([
-            'name'     => $params->name,
-            'email'    => $params->email,
+            'name' => $params->name,
+            'email' => $params->email,
             'password' => Hash::make($params->password),
             'user_img' => $params->userImg,
         ]);
     }
-    
 
     /**
      * ユーザー更新（パスワード以外）
@@ -29,8 +27,8 @@ class UserCreateQuery
     public function updateUser(UserCreateParameter $params, User $loginInfoModel): void
     {
         User::where('id', $loginInfoModel->id)->update([
-            'name'     => $params->name,
-            'email'    => $params->email,
+            'name' => $params->name,
+            'email' => $params->email,
             'user_img' => $params->userImg,
         ]);
     }

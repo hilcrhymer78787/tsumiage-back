@@ -12,10 +12,11 @@ class InvitationReadController extends Controller
 {
     public function __construct(private InvitationReadService $service) {}
 
-    public function index(FormRequest $request) : InvitationReadResource | ErrorResource
+    public function index(FormRequest $request): InvitationReadResource|ErrorResource
     {
         try {
             $invitationReadEntity = $this->service->invitationRead($request);
+
             return new InvitationReadResource($invitationReadEntity);
         } catch (Throwable $error) {
             // debugError($error);

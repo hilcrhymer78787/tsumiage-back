@@ -26,5 +26,4 @@ class InvitationReadEntity
     {
         return $this->toFriendsEntity;
     }
-
 }

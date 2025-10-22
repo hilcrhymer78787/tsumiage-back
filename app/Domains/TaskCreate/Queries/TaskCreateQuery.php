@@ -21,6 +21,7 @@ class TaskCreateQuery
             ]
         );
     }
+
     public function getIsExistMyTask(int $taskId, int $userId): bool
     {
         return Task::where('task_id', $taskId)

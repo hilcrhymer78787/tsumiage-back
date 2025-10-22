@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Common\ErrorResource;
-use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Resources\Common\LoginInfoResource;
 use App\Domains\AuthBearer\Services\AuthBearerService;
+use App\Http\Resources\Common\ErrorResource;
+use App\Http\Resources\Common\LoginInfoResource;
+use Illuminate\Foundation\Http\FormRequest;
 use Throwable;
 
 class AuthBearerController extends Controller
 {
     public function __construct(private AuthBearerService $service) {}
 
-    public function index(FormRequest $request): LoginInfoResource | ErrorResource
+    public function index(FormRequest $request): LoginInfoResource|ErrorResource
     {
         try {
             $loginInfoEntity = $this->service->bearerAuth($request);
+
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
             // debugError($error);

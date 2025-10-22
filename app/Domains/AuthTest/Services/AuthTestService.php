@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domains\AuthTest\Services;
 
-use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\AuthTest\Queries\AuthTestQuery;
+use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Http\Exceptions\AppHttpException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,9 @@ class AuthTestService
     public function testAuth(Request $request): LoginInfoEntity
     {
         $loginInfoModel = $this->query->getTestUserModel();
-        if (!$loginInfoModel) throw new AppHttpException(404, 'テストユーザーが見つかりませんでした');
+        if (! $loginInfoModel) {
+            throw new AppHttpException(404, 'テストユーザーが見つかりませんでした');
+        }
 
         Auth::login($loginInfoModel);
         $request->session()->regenerate();
@@ -32,4 +34,4 @@ class AuthTestService
             emailVerifiedAt: $loginInfoModel->email_verified_at,
         );
     }
-};
+}

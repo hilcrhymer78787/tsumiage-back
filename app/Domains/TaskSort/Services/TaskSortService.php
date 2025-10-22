@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domains\TaskSort\Services;
 
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\TaskSort\Parameters\TaskSortParameter;
 use App\Domains\TaskSort\Queries\TaskSortQuery;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Http\Requests\TaskSortRequest;
 
 class TaskSortService
@@ -22,7 +22,7 @@ class TaskSortService
         $taskIds = $params->ids;
 
         $this->query->sortTask($taskIds, $userId);
-        
-        return "タスクの順番を変更しました";
+
+        return 'タスクの順番を変更しました';
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Domains\InvitationCreate\Queries;
 
-use App\Domains\InvitationCreate\Parameters\InvitationCreateParameter;
 use App\Models\Invitation;
 
 class InvitationCreateQuery

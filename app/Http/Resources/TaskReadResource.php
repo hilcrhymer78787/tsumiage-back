@@ -13,7 +13,7 @@ class TaskReadResource extends BaseResource
             'date' => $this->resource->getDate(),
             'tasks' => TaskResource::collection(
                 $this->resource->getTaskEntities()
-            )
+            ),
         ];
     }
 }

@@ -13,6 +13,7 @@ class TaskDeleteQuery
             ->where('task_user_id', $userId)
             ->delete();
     }
+
     public function deleteWork(int $taskId, int $userId): int
     {
         return Work::where('work_task_id', $taskId)

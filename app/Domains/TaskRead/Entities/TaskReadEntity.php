@@ -21,5 +21,4 @@ class TaskReadEntity
     {
         return $this->taskEntities;
     }
-
 }

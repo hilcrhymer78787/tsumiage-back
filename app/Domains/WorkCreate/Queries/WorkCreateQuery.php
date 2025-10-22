@@ -13,11 +13,11 @@ class WorkCreateQuery
         return Work::updateOrCreate(
             [
                 'work_user_id' => $userId,
-                'work_date'    => $params->date,
+                'work_date' => $params->date,
                 'work_task_id' => $params->taskId,
             ],
             [
-                'work_state'   => $params->state,
+                'work_state' => $params->state,
             ]
         );
     }

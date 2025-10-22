@@ -6,10 +6,10 @@ namespace App\Domains\UserDelete\Services;
 
 use App\Domains\Shared\CheckIsExistEmail\Services\CheckIsExistEmailService;
 use App\Domains\Shared\Invitation\Queries\InvitationQuery;
-use App\Domains\UserDelete\Queries\UserDeleteQuery;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\Task\Queries\TaskQuery;
 use App\Domains\Shared\Work\Queries\WorkQuery;
+use App\Domains\UserDelete\Queries\UserDeleteQuery;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserDeleteService
@@ -32,6 +32,7 @@ class UserDeleteService
         $this->taskQuery->deleteTaskByUserId($userId);
         $this->workQuery->deleteWorkByUserId($userId);
         $this->invitationQuery->deleteInvitationByUserId($userId);
-        return "ユーザーを削除しました";
+
+        return 'ユーザーを削除しました';
     }
 }

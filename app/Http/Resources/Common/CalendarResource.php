@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Resources\Common;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,7 +19,7 @@ class CalendarResource extends JsonResource
         return [
             'date' => $this->resource->getDate(),
             'tasks' => $taskEntities->map(function ($taskEntity) {
-                return (new TaskResource($taskEntity));
+                return new TaskResource($taskEntity);
             }),
         ];
     }

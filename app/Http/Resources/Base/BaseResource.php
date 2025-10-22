@@ -12,8 +12,8 @@ abstract class BaseResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'data'    => $this->resourceData($request),
-            'status'  => 200,
+            'data' => $this->resourceData($request),
+            'status' => 200,
         ];
     }
 

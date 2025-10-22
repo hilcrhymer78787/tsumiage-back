@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domains\Shared\CheckIsFriends\Services;
 
 use App\Domains\Shared\CheckIsFriends\Queries\CheckIsFriendsQuery;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
 class CheckIsFriendsService
 {

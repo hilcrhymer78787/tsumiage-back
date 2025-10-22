@@ -14,7 +14,7 @@ class WorksTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($date = date("Y-m-d",strtotime("-3 month")); $date <= date('Y-m-d'); $date = date('Y-m-d', strtotime($date . '+1 day'))) {
+        for ($date = date('Y-m-d', strtotime('-3 month')); $date <= date('Y-m-d'); $date = date('Y-m-d', strtotime($date.'+1 day'))) {
             for ($taskId = 1; $taskId <= 4; $taskId++) {
                 DB::table('works')->insert([
                     [

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domains\TaskCreate\Services;
 
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\TaskCreate\Parameters\TaskCreateParameter;
 use App\Domains\TaskCreate\Queries\TaskCreateQuery;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
-use App\Http\Requests\TaskCreateRequest;
 use App\Http\Exceptions\AppHttpException;
+use App\Http\Requests\TaskCreateRequest;
 
 class TaskCreateService
 {
@@ -22,12 +22,14 @@ class TaskCreateService
         $userId = $this->loginInfoService->getLoginInfo($request)->id;
         $taskId = $params->id;
 
-        if($taskId){
+        if ($taskId) {
             $isExistMyTask = $this->query->getIsExistMyTask($taskId, $userId);
-            if (!$isExistMyTask) throw new AppHttpException(404, '更新するタスクが存在しません');
+            if (! $isExistMyTask) {
+                throw new AppHttpException(404, '更新するタスクが存在しません');
+            }
         }
         $this->query->updateOrCreateTask($params, $userId);
-        
-        return "タスクを" . ($taskId ? "更新" : "作成") . "しました";
+
+        return 'タスクを'.($taskId ? '更新' : '作成').'しました';
     }
 }

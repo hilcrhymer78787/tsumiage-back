@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domains\InvitationRead\Services;
 
-use App\Domains\InvitationRead\Factories\InvitationReadFactory;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
-use App\Domains\Shared\CheckIsFriends\Services\CheckIsFriendsService;
-use App\Domains\Shared\Work\Queries\WorkQuery;
 use App\Domains\InvitationRead\Entities\InvitationReadEntity;
+use App\Domains\InvitationRead\Factories\InvitationReadFactory;
 use App\Domains\InvitationRead\Queries\InvitationReadQuery;
+use App\Domains\Shared\CheckIsFriends\Services\CheckIsFriendsService;
+use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
+use App\Domains\Shared\Work\Queries\WorkQuery;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InvitationReadService
@@ -36,4 +36,4 @@ class InvitationReadService
 
         return $this->factory->getInvitationReadEntity($invitationReadModel);
     }
-};
+}

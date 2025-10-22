@@ -2,10 +2,9 @@
 
 namespace App\Domains\WorkReadMonth\Factories;
 
-use App\Domains\WorkReadMonth\Entities\WorkReadMonthEntity;
 use App\Domains\Shared\Calendar\Factories\CalendarFactory;
+use App\Domains\WorkReadMonth\Entities\WorkReadMonthEntity;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class WorkReadMonthFactory
 {
@@ -18,6 +17,7 @@ class WorkReadMonthFactory
         $calendarEntities = $calendarModels->map(function ($calendarModel) {
             return $this->calendarFactory->create($calendarModel);
         });
+
         return new WorkReadMonthEntity($calendarEntities);
     }
 }

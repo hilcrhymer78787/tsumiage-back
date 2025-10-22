@@ -20,6 +20,7 @@ class ErrorResource extends JsonResource
     public function toArray($request): array
     {
         $resource = $this->resource;
+
         return [
             'status' => $this->getStatusCode(),
             'message' => $resource->getMessage(),

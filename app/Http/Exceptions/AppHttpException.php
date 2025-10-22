@@ -10,18 +10,15 @@ class AppHttpException extends HttpException
     private ?array $data;
 
     /**
-     * @param int $statusCode HTTPステータスコード
-     * @param string $message エラーメッセージ
-     * @param array $data 追加データ
-     * @param Throwable|null $previous
-     * @param array $headers
-     * @param int $code
+     * @param  int  $statusCode  HTTPステータスコード
+     * @param  string  $message  エラーメッセージ
+     * @param  array  $data  追加データ
      */
     public function __construct(
         int $statusCode,
         string $message = '',
-        array $data = null,
-        Throwable $previous = null,
+        ?array $data = null,
+        ?Throwable $previous = null,
         array $headers = [],
         int $code = 0
     ) {
@@ -32,7 +29,7 @@ class AppHttpException extends HttpException
     /**
      * 追加データを取得
      */
-    public function getData(): array | null
+    public function getData(): ?array
     {
         return $this->data;
     }

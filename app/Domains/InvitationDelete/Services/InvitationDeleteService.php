@@ -7,8 +7,8 @@ namespace App\Domains\InvitationDelete\Services;
 use App\Domains\InvitationDelete\Parameters\InvitationDeleteParameter;
 use App\Domains\InvitationDelete\Queries\InvitationDeleteQuery;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
-use App\Http\Requests\InvitationDeleteRequest;
 use App\Http\Exceptions\AppHttpException;
+use App\Http\Requests\InvitationDeleteRequest;
 
 class InvitationDeleteService
 {
@@ -23,8 +23,10 @@ class InvitationDeleteService
         $invitationId = $params->invitationId;
 
         $num = $this->query->deleteInvitation($invitationId, $myUserId);
-        if (!$num) throw new AppHttpException(404, '招待の削除に失敗しました');
+        if (! $num) {
+            throw new AppHttpException(404, '招待の削除に失敗しました');
+        }
 
-        return "招待を削除しました";
+        return '招待を削除しました';
     }
 }

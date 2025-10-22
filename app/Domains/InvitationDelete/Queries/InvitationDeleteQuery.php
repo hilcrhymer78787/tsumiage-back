@@ -2,9 +2,7 @@
 
 namespace App\Domains\InvitationDelete\Queries;
 
-use App\Domains\InvitationDelete\Parameters\InvitationDeleteParameter;
 use App\Models\Invitation;
-use App\Models\User;
 
 class InvitationDeleteQuery
 {

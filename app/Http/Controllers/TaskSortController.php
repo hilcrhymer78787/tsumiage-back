@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domains\TaskSort\Parameters\TaskSortParameter;
-use App\Http\Resources\Common\ErrorResource;
 use App\Domains\TaskSort\Services\TaskSortService;
 use App\Http\Requests\TaskSortRequest;
+use App\Http\Resources\Common\ErrorResource;
 use App\Http\Resources\Common\SuccessResource;
 use Throwable;
 
@@ -13,11 +13,12 @@ class TaskSortController extends Controller
 {
     public function __construct(private TaskSortService $service) {}
 
-    public function index(TaskSortRequest $request): SuccessResource | ErrorResource
+    public function index(TaskSortRequest $request): SuccessResource|ErrorResource
     {
         try {
             $params = TaskSortParameter::makeParams($request->validated());
             $message = $this->service->sortTask($params, $request);
+
             return new SuccessResource($message);
         } catch (Throwable $error) {
             // debugError($error);

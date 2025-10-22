@@ -15,5 +15,4 @@ class WorkReadMonthEntity
     {
         return $this->calendarEntities;
     }
-
 }

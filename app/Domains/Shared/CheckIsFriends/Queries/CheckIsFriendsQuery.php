@@ -4,7 +4,6 @@ namespace App\Domains\Shared\CheckIsFriends\Queries;
 
 use App\Models\Invitation;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Log;
 
 class CheckIsFriendsQuery
 {

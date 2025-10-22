@@ -23,7 +23,7 @@ class BackupDatabaseCommand extends Command
 
         // --- バックアップ用のディレクトリとファイル名 ---
         $backupDir = storage_path('app/backup');
-        if (!File::isDirectory($backupDir)) {
+        if (! File::isDirectory($backupDir)) {
             File::makeDirectory($backupDir, 0755, true);
         }
 
@@ -49,18 +49,19 @@ class BackupDatabaseCommand extends Command
             $this->info("✅ Backup complete: {$fileName}");
         } else {
             $this->error('❌ Database backup failed.');
+
             return self::FAILURE;
         }
 
         // --- 古いバックアップの削除（3日以上前） ---
-        $files = File::glob($backupDir . '/*.sql'); // .sql ファイルのみ対象
+        $files = File::glob($backupDir.'/*.sql'); // .sql ファイルのみ対象
         $threshold = now()->subDays(3);
 
         foreach ($files as $file) {
             $fileTime = Carbon::createFromTimestamp(File::lastModified($file));
             if ($fileTime->lt($threshold)) {
                 File::delete($file);
-                $this->info("🗑 Deleted old backup: " . basename($file));
+                $this->info('🗑 Deleted old backup: '.basename($file));
             }
         }
 

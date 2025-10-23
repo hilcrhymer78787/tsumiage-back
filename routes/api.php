@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\AuthBearerController;
+use App\Http\Controllers\AuthEmailVerifyController;
 use App\Http\Controllers\AuthLogoutController;
 use App\Http\Controllers\AuthTestController;
 use App\Http\Controllers\EmailVerifyIdHashController;
@@ -21,7 +22,6 @@ use App\Http\Controllers\WorkCreateController;
 use App\Http\Controllers\WorkDeleteController;
 use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // テストルート
@@ -31,7 +31,7 @@ Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 Route::middleware(['web'])->group(function () {
 
     // メール認証
-    Route::middleware(['signed'])->group(function(){
+    Route::middleware(['signed'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
 
@@ -45,6 +45,7 @@ Route::middleware(['web'])->group(function () {
 
         // user
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
+        Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']);
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task

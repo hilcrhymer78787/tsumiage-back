@@ -33,7 +33,7 @@ class AuthBasicService
 
         $isCorrect = Hash::check($params->password, $loginInfoModel->password);
         if (! $isCorrect) {
-            throw new AppHttpException(401, '', ['passwordError' => 'パスワードが間違っています']);
+            throw new AppHttpException(500, '', ['passwordError' => 'パスワードが間違っています']);
         }
 
         Auth::login($loginInfoModel);

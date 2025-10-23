@@ -7,6 +7,7 @@ namespace App\Domains\AuthPasswordForgot\Services;
 use App\Domains\AuthPasswordForgot\Parameters\AuthPasswordForgotParameter;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Http\Exceptions\AppHttpException;
+use App\Models\User;
 use Illuminate\Support\Facades\Password;
 
 class AuthPasswordForgotService
@@ -15,6 +16,13 @@ class AuthPasswordForgotService
 
     public function passwordForgot(AuthPasswordForgotParameter $params): string
     {
+        // メールアドレスが存在するか確認
+        // TODO
+        $targetUser = User::where('email', $params->email)->first();
+        if (! $targetUser) {
+            throw new AppHttpException(404, '', ['emailError' => 'このメールアドレスは登録されていません']);
+        }
+
         $status = Password::sendResetLink(['email' => $params->email]);
 
         // 連続送信（スパム防止）の場合

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthEmailVerifyController;
 use App\Http\Controllers\AuthLogoutController;
+use App\Http\Controllers\AuthPasswordForgotController;
 use App\Http\Controllers\AuthTestController;
 use App\Http\Controllers\EmailVerifyIdHashController;
 use App\Http\Controllers\InvitationCreateController;
@@ -24,13 +25,9 @@ use App\Http\Controllers\WorkDeleteController;
 use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Exceptions\AppHttpException;
 
 // テストルート
-Route::get('/test', fn() => ['message' => 'this is test 1']); // 🗒️
+Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
@@ -47,32 +44,11 @@ Route::middleware(['web'])->group(function () {
         ->name('password.update');
 
     // user
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
+    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/create', [UserCreateController::class, 'index']);
-    // TODO リファクタリング
-    Route::post('/user/auth/password/forgot', function (Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        if ($validator->fails()) {
-            throw new AppHttpException(422, $validator->errors()->first());
-        }
-
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return [
-                'message' => "{$request->email} 宛にパスワードリセットメールを送信しました。ご確認ください。"
-            ];
-        } else {
-            throw new AppHttpException(500, 'メール送信に失敗しました');
-        }
-    });
 
     Route::middleware(['auth:sanctum'])->group(function () {
 

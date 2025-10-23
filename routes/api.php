@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthLogoutController;
 use App\Http\Controllers\AuthTestController;
+use App\Http\Controllers\EmailVerifyIdHashController;
 use App\Http\Controllers\InvitationCreateController;
 use App\Http\Controllers\InvitationDeleteController;
 use App\Http\Controllers\InvitationReadController;
@@ -21,36 +22,18 @@ use App\Http\Controllers\WorkDeleteController;
 use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 // テストルート
 Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 
-Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
-    $user = User::findOrFail($id);
-
-    // URL が署名付きか確認
-    if (! URL::hasValidSignature($request)) {
-        return response()->json(['message' => '無効な認証リンクです'], 403);
-    }
-
-    // すでに認証済み
-    if ($user->hasVerifiedEmail()) {
-        return response()->json(['message' => '既にメール認証済みです'], 200);
-    }
-
-    $user->markEmailAsVerified();
-
-    return response()->json([
-        'message' => 'メール認証が完了しました',
-        'email_verified_at' => $user->email_verified_at,
-    ]);
-})->name('verification.verify');
-
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
+
+    // メール認証
+    Route::middleware(['signed'])->group(function(){
+        Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
+    });
 
     // user
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);

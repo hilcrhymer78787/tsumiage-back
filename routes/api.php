@@ -2,6 +2,7 @@
 
 // TODO: 認証周りをlaravelのデフォルトで行い、メール確認機能をつける
 
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthEmailVerifyController;
@@ -23,9 +24,13 @@ use App\Http\Controllers\WorkDeleteController;
 use App\Http\Controllers\WorkReadMonthController;
 use App\Http\Controllers\WorkResetController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Exceptions\AppHttpException;
 
 // テストルート
-Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
+Route::get('/test', fn() => ['message' => 'this is test 1']); // 🗒️
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
@@ -35,11 +40,39 @@ Route::middleware(['web'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
 
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
+        ->name('password.reset');
+
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])
+        ->name('password.update');
+
     // user
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
     Route::post('/user/create', [UserCreateController::class, 'index']);
+    // TODO リファクタリング
+    Route::post('/user/auth/password/forgot', function (Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            throw new AppHttpException(422, $validator->errors()->first());
+        }
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return [
+                'message' => "{$request->email} 宛にパスワードリセットメールを送信しました。ご確認ください。"
+            ];
+        } else {
+            throw new AppHttpException(500, 'メール送信に失敗しました');
+        }
+    });
 
     Route::middleware(['auth:sanctum'])->group(function () {
 

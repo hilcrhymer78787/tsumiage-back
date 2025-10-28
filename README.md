@@ -2,9 +2,9 @@ git clone https://github.com/hilcrhymer78787/tsumiage-back.git
 
 cd tsumiage-back
 
-docker-compose up -d --build
+docker compose up -d --build
 
-docker-compose exec app bash
+docker compose exec app bash
 
 cp .env.example .env
 
@@ -27,5 +27,5 @@ composer dump-autoload && php artisan cache:clear && php artisan config:clear &&
 php artisan test
 
 【myslq】
-docker-compose exec mysql bash
+docker compose exec mysql bash
 mysql -u root -ppassword -h mysql -P 3306

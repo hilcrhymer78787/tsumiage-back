@@ -35,18 +35,18 @@ Route::middleware(['web'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
 
-    // user
+    // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
-    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
-        // user
+        // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
+        Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
         // TODO ブラウザが違う、PWAの場合にバグ
         Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']);
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);

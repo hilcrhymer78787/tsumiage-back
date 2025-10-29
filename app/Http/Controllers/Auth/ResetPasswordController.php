@@ -5,17 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function showResetForm(Request $request, $token = null)
-    {
-        return view('auth.passwords.reset')->with([
-            'token' => $token,
-            'email' => $request->email,
-        ]);
-    }
-
+    // TODO
     public function reset(Request $request)
     {
         $request->validate([
@@ -27,13 +21,22 @@ class ResetPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
-                $user->password = bcrypt($password);
-                $user->save();
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->save();
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => 'パスワードを変更しました！'])
-            : response()->json(['message' => 'パスワードを変更に失敗しました！']);
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'パスワードを変更しました！',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 400,
+            'message' => 'パスワードリセットに失敗しました。',
+        ], 400);
     }
 }

@@ -8,6 +8,7 @@ use App\Domains\AuthPasswordForgot\Parameters\AuthPasswordForgotParameter;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Http\Exceptions\AppHttpException;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class AuthPasswordForgotService
@@ -23,12 +24,18 @@ class AuthPasswordForgotService
             throw new AppHttpException(404, '', ['emailError' => 'このメールアドレスは登録されていません']);
         }
 
-        $status = Password::sendResetLink(['email' => $params->email]);
-
-        // 連続送信（スパム防止）の場合
-        if ($status === Password::RESET_THROTTLED) {
-            throw new AppHttpException(429, '短時間に連続でメール送信が行われたため、しばらく時間をおいてお試しください。');
-        }
+        // パスワードリセットリンクを作成
+        $status = Password::sendResetLink(
+            ['email' => $targetUser->email],
+            function ($user, $token) use ($params) {
+                $resetUrl = config('app.frontend_url') . "/reset-password?token={$token}&email={$user->email}";
+                Mail::send([], [], function ($message) use ($user, $resetUrl) {
+                    $message->to($user->email)
+                        ->subject('パスワードリセットのご案内')
+                        ->text("以下のリンクからパスワードをリセットしてください。\n\n" . $resetUrl);
+                });
+            }
+        );
 
         if ($status !== Password::RESET_LINK_SENT) {
             throw new AppHttpException(500, 'メール送信に失敗しました');

@@ -36,17 +36,16 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['signed'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
-
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
-        ->name('password.reset');
-
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])
-        ->name('password.update');
+    
+    // TODO
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
     // user
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
+    
+    // TODO
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/create', [UserCreateController::class, 'index']);
 

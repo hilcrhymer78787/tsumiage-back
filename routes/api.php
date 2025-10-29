@@ -25,12 +25,13 @@ use App\Http\Controllers\WorkResetController;
 use Illuminate\Support\Facades\Route;
 
 // テストルート
-Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
+Route::get('/test', fn() => ['message' => 'this is test 1']); // 🗒️
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
 
     // メール認証
+    // 🔥
     Route::middleware(['signed'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
@@ -47,6 +48,7 @@ Route::middleware(['web'])->group(function () {
 
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
+        // 🔥
         Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 

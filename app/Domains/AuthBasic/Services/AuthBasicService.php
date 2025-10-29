@@ -36,6 +36,7 @@ class AuthBasicService
             throw new AppHttpException(500, '', ['passwordError' => 'パスワードが間違っています']);
         }
 
+        // TODO 統一
         Auth::login($loginInfoModel);
         $request->session()->regenerate();
 

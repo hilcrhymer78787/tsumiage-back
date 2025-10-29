@@ -2,41 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
+use App\Domains\AuthPasswordReset\Parameters\AuthPasswordResetParameter;
+use App\Domains\AuthPasswordReset\Services\AuthPasswordResetService;
+use App\Http\Requests\AuthPasswordResetRequest;
+use App\Http\Resources\Common\ErrorResource;
+use App\Http\Resources\Common\LoginInfoResource;
+use App\Http\Resources\Common\SuccessResource;
+use Throwable;
 
 class AuthPasswordResetController extends Controller
 {
-    // TODO
-    public function index(Request $request)
+    public function __construct(private AuthPasswordResetService $service) {}
+
+    public function index(AuthPasswordResetRequest $request): LoginInfoResource|ErrorResource
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:8',
-        ]);
+        try {
+            $params = AuthPasswordResetParameter::makeParams($request->validated());
+            $loginInfoEntity = $this->service->passwordReset($params, $request);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password),
-                ])->save();
-            }
-        );
-
-        if ($status === Password::PASSWORD_RESET) {
-            return response()->json([
-                'status' => 200,
-                'message' => 'パスワードを変更しました！',
-            ]);
+            return new LoginInfoResource($loginInfoEntity);
+        } catch (Throwable $error) {
+            // debugError($error);
+            return new ErrorResource($error);
         }
-
-        return response()->json([
-            'status' => 400,
-            'message' => 'パスワードリセットに失敗しました。',
-        ], 400);
     }
 }

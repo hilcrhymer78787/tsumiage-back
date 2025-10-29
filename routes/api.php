@@ -47,8 +47,7 @@ Route::middleware(['web'])->group(function () {
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
         Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
-        // TODO ブラウザが違う、PWAの場合にバグ
-        Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']);
+        Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task

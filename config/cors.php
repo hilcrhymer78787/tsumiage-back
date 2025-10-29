@@ -3,6 +3,7 @@
 return [
 
     // 対象のパス
+    // TODO
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'user'],
 
     // 許可するHTTPメソッド

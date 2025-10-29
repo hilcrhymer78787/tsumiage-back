@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthEmailVerifyController;
 use App\Http\Controllers\AuthLogoutController;
 use App\Http\Controllers\AuthPasswordForgotController;
+use App\Http\Controllers\AuthPasswordResetController;
 use App\Http\Controllers\AuthTestController;
 use App\Http\Controllers\EmailVerifyIdHashController;
 use App\Http\Controllers\InvitationCreateController;
@@ -36,18 +37,14 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['signed'])->group(function () {
         Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
     });
-    
-    // TODO
-    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
     // user
+    Route::post('/user/create', [UserCreateController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
-    
-    // TODO
-    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
-    Route::post('/user/create', [UserCreateController::class, 'index']);
+    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']); // TODO
+    Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index'])->name('password.reset'); // TODO
 
     Route::middleware(['auth:sanctum'])->group(function () {
 

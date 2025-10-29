@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 
-class ResetPasswordController extends Controller
+class AuthPasswordResetController extends Controller
 {
     // TODO
-    public function reset(Request $request)
+    public function index(Request $request)
     {
         $request->validate([
             'token' => 'required',

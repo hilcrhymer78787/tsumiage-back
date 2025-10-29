@@ -25,16 +25,14 @@ use App\Http\Controllers\WorkResetController;
 use Illuminate\Support\Facades\Route;
 
 // テストルート
-Route::get('/test', fn() => ['message' => 'this is test 1']); // 🗒️
+Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
 
     // メール認証
     // 🔥
-    Route::middleware(['signed'])->group(function () {
-        Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
-    });
+    Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
 
     // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);

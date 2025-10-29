@@ -30,7 +30,9 @@ class AuthPasswordResetService
                 $user->forceFill(['password' => Hash::make($password)])->save();
             }
         );
-        if ($status !== Password::PASSWORD_RESET) throw new AppHttpException(500, 'パスワードリセットに失敗しました。');
+        if ($status !== Password::PASSWORD_RESET) {
+            throw new AppHttpException(500, 'パスワードリセットに失敗しました。');
+        }
 
         $loginInfoModel = $this->query->getLoginInfo(new AuthBasicParameter(
             email: $params->email,

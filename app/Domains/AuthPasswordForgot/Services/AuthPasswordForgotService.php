@@ -27,12 +27,12 @@ class AuthPasswordForgotService
         // パスワードリセットリンクを作成
         $status = Password::sendResetLink(
             ['email' => $targetUser->email],
-            function ($user, $token) use ($params) {
-                $resetUrl = config('app.frontend_url') . "/reset-password?token={$token}&email={$user->email}";
+            function ($user, $token) {
+                $resetUrl = config('app.frontend_url')."/reset-password?token={$token}&email={$user->email}";
                 Mail::send([], [], function ($message) use ($user, $resetUrl) {
                     $message->to($user->email)
                         ->subject('パスワードリセットのご案内')
-                        ->text("以下のリンクからパスワードをリセットしてください。\n\n" . $resetUrl);
+                        ->text("以下のリンクからパスワードをリセットしてください。\n\n".$resetUrl);
                 });
             }
         );

@@ -7,7 +7,6 @@ use App\Domains\AuthPasswordReset\Services\AuthPasswordResetService;
 use App\Http\Requests\AuthPasswordResetRequest;
 use App\Http\Resources\Common\ErrorResource;
 use App\Http\Resources\Common\LoginInfoResource;
-use App\Http\Resources\Common\SuccessResource;
 use Throwable;
 
 class AuthPasswordResetController extends Controller

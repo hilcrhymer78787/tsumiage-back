@@ -10,9 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AuthBearerService
 {
-    public function __construct(
-        private readonly LoginInfoService $loginInfoService,
-    ) {}
+    public function __construct(private readonly LoginInfoService $loginInfoService) {}
 
     public function bearerAuth(FormRequest $request): LoginInfoEntity
     {

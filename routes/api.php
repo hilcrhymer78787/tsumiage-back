@@ -32,7 +32,8 @@ Route::middleware(['web'])->group(function () {
 
     // メール認証
     // TODO ルート名検討
-    Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
+    //🔥2リンクを踏む
+    Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
 
     // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);
@@ -49,7 +50,8 @@ Route::middleware(['web'])->group(function () {
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
         // TODO ルート名検討
-        Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
+        //🔥1メールを送る
+        Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task

@@ -35,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
                     'id' => $notifiable->id,
                     'hash' => sha1($notifiable->email),
                 ]);
-                return config('app.frontend_url') . "/email/verify?{$params}";
+                return config('app.frontend_url') . "/email?{$params}";
             }
 
             public function toMail($notifiable)

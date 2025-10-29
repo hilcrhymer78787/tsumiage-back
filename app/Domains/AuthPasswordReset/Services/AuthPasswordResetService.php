@@ -23,6 +23,7 @@ class AuthPasswordResetService
 
     public function passwordReset(AuthPasswordResetParameter $params, AuthPasswordResetRequest $request): LoginInfoEntity
     {
+        // TODO
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {

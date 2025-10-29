@@ -42,7 +42,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
-    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']); // TODO
+    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']); // TODO
 
     Route::middleware(['auth:sanctum'])->group(function () {

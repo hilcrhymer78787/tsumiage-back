@@ -18,7 +18,6 @@ class AuthPasswordForgotService
     public function passwordForgot(AuthPasswordForgotParameter $params): string
     {
         // メールアドレスが存在するか確認
-        // TODO
         $targetUser = User::where('email', $params->email)->first();
         if (! $targetUser) {
             throw new AppHttpException(404, '', ['emailError' => 'このメールアドレスは登録されていません']);

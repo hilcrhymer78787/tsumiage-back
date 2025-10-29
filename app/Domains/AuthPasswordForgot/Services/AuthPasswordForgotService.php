@@ -30,7 +30,7 @@ class AuthPasswordForgotService
         $status = Password::sendResetLink(
             ['email' => $targetUser->email],
             function ($user, $token) {
-                $resetUrl = config('app.frontend_url')."/reset-password?token={$token}&email={$user->email}";
+                $resetUrl = config('app.frontend_url')."/password?token={$token}&email={$user->email}";
                 Mail::send([], [], function ($message) use ($user, $resetUrl) {
                     $message->to($user->email)
                         ->subject('パスワードリセットのご案内')

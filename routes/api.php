@@ -41,12 +41,12 @@ Route::middleware(['web'])->group(function () {
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']);
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
-        Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
         Route::post('/user/auth/email/verify', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 

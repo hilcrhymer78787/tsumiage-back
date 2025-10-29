@@ -32,7 +32,7 @@ Route::middleware(['web'])->group(function () {
 
     // メール認証
     // TODO ルート名検討
-    Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index'])->name('verification.verify');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
 
     // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);

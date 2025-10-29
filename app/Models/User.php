@@ -31,17 +31,11 @@ class User extends Authenticatable implements MustVerifyEmail
         {
             protected function verificationUrl($notifiable)
             {
-                // Laravel署名付きURL（必要ならAPIで確認）
-                $signedUrl = URL::temporarySignedRoute(
-                    'verification.verify', // Laravel API側のルート名
-                    now()->addMinutes(60),
-                    ['id' => $notifiable->id, 'hash' => sha1($notifiable->email)]
-                );
-
-                // Next.js 側URLに置き換え
-                $nextUrl = config('app.frontend_url')."/email/verify?id={$notifiable->id}&hash=".sha1($notifiable->email);
-
-                return $nextUrl;
+                $params = http_build_query([
+                    'id' => $notifiable->id,
+                    'hash' => sha1($notifiable->email),
+                ]);
+                return config('app.frontend_url') . "/email/verify?{$params}";
             }
 
             public function toMail($notifiable)

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailBase;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailBase;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -26,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new class extends VerifyEmailBase {
+        $this->notify(new class extends VerifyEmailBase
+        {
             protected function verificationUrl($notifiable)
             {
                 // Laravel署名付きURL（必要ならAPIで確認）
@@ -37,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 );
 
                 // Next.js 側URLに置き換え
-                $nextUrl = "http://localhost:3000/email/verify/{$notifiable->id}/" . sha1($notifiable->email);
+                $nextUrl = "http://localhost:3000/email/verify/{$notifiable->id}/".sha1($notifiable->email);
 
                 return $nextUrl;
             }

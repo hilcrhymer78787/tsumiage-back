@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Domains\AuthTest\Services;
 
 use App\Domains\AuthTest\Queries\AuthTestQuery;
+use App\Domains\Shared\Auth\Services\AuthService;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Http\Exceptions\AppHttpException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthTestService
 {
     public function __construct(
         private readonly AuthTestQuery $query,
+        private readonly AuthService $authService,
     ) {}
 
     public function testAuth(Request $request): LoginInfoEntity
@@ -23,8 +24,7 @@ class AuthTestService
             throw new AppHttpException(404, 'テストユーザーが見つかりませんでした');
         }
 
-        Auth::login($loginInfoModel);
-        $request->session()->regenerate();
+        $this->authService->loginByUserModel($loginInfoModel, $request);
 
         return new LoginInfoEntity(
             id: $loginInfoModel->id,

@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Domains\AuthBasic\Services;
 
 use App\Domains\AuthBasic\Parameters\AuthBasicParameter;
+use App\Domains\Shared\Auth\Services\AuthService;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthBasicService
 {
     public function __construct(
         private readonly UserService $userService,
+        private readonly AuthService $authService,
     ) {}
 
     /**
@@ -33,9 +34,7 @@ class AuthBasicService
             throw new AppHttpException(500, '', ['passwordError' => 'パスワードが間違っています']);
         }
 
-        // TODO 統一
-        Auth::login($loginInfoModel);
-        $request->session()->regenerate();
+        $this->authService->loginByUserModel($loginInfoModel, $request);
 
         return new LoginInfoEntity(
             id: $loginInfoModel->id,

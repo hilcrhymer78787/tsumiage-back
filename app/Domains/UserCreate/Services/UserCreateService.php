@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\UserCreate\Services;
 
+use App\Domains\Shared\Auth\Services\AuthService;
 use App\Domains\Shared\CheckIsExistEmail\Services\CheckIsExistEmailService;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
@@ -12,7 +13,6 @@ use App\Domains\UserCreate\Queries\UserCreateQuery;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\UserCreateRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserCreateService
@@ -21,6 +21,7 @@ class UserCreateService
         private readonly LoginInfoService $loginInfoService,
         private readonly CheckIsExistEmailService $checkIsExistEmailService,
         private readonly UserCreateQuery $query,
+        private readonly AuthService $authService,
     ) {}
 
     public function upsertUser(UserCreateParameter $params, UserCreateRequest $request): LoginInfoEntity
@@ -48,8 +49,7 @@ class UserCreateService
         // ファイル保存
         $this->storeUserFile($params, $request);
 
-        Auth::login($loginInfoModel);
-        $request->session()->regenerate();
+        $this->authService->loginByUserModel($loginInfoModel, $request);
 
         return $this->toLoginInfoEntity($loginInfoModel);
     }

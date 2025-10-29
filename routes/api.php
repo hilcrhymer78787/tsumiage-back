@@ -1,7 +1,5 @@
 <?php
 
-// TODO: 認証周りをlaravelのデフォルトで行い、メール確認機能をつける
-
 use App\Http\Controllers\AuthBasicController;
 use App\Http\Controllers\AuthBearerController;
 use App\Http\Controllers\AuthEmailVerifyController;

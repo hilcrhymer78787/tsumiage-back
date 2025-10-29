@@ -8,7 +8,6 @@ use App\Domains\AuthPasswordForgot\Parameters\AuthPasswordForgotParameter;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
-use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
@@ -22,7 +21,6 @@ class AuthPasswordForgotService
     public function passwordForgot(AuthPasswordForgotParameter $params): string
     {
         // メールアドレスが存在するか確認
-        // TODO User::where('email'の統一
         $targetUser = $this->userService->getUserByEmail($params->email);
         if (! $targetUser) {
             throw new AppHttpException(404, '', ['emailError' => 'このメールアドレスは登録されていません']);

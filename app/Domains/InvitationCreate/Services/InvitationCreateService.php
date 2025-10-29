@@ -7,13 +7,14 @@ namespace App\Domains\InvitationCreate\Services;
 use App\Domains\InvitationCreate\Parameters\InvitationCreateParameter;
 use App\Domains\InvitationCreate\Queries\InvitationCreateQuery;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
+use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\InvitationCreateRequest;
-use App\Models\User;
 
 class InvitationCreateService
 {
     public function __construct(
+        private readonly UserService $userService,
         private readonly LoginInfoService $loginInfoService,
         private readonly InvitationCreateQuery $query,
     ) {}
@@ -23,7 +24,7 @@ class InvitationCreateService
         $myUserId = $this->loginInfoService->getLoginInfo($request)->id;
 
         // メールアドレスが存在するか確認
-        $targetUser = User::where('email', $params->email)->first();
+        $targetUser = $this->userService->getUserByEmail($params->email);
         if (! $targetUser) {
             throw new AppHttpException(404, 'このメールアドレスは登録されていません');
         }

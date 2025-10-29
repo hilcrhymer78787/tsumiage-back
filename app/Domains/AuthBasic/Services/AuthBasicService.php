@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Domains\AuthBasic\Services;
 
 use App\Domains\AuthBasic\Parameters\AuthBasicParameter;
-use App\Domains\AuthBasic\Queries\AuthBasicQuery;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
+use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class AuthBasicService
 {
     public function __construct(
         private readonly LoginInfoService $loginInfoService,
-        private readonly AuthBasicQuery $query,
+        private readonly UserService $userService,
     ) {}
 
     /**
@@ -25,8 +25,7 @@ class AuthBasicService
      */
     public function basicAuth(AuthBasicParameter $params, Request $request): LoginInfoEntity
     {
-        $loginInfoModel = $this->query->getLoginInfo($params);
-
+        $loginInfoModel = $this->userService->getUserByEmail($params->email);
         if (! $loginInfoModel) {
             throw new AppHttpException(404, '', ['emailError' => 'このメールアドレスは登録されていません']);
         }

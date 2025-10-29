@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domains\AuthPasswordReset\Services;
 
-use App\Domains\AuthBasic\Parameters\AuthBasicParameter;
-use App\Domains\AuthBasic\Queries\AuthBasicQuery;
 use App\Domains\AuthPasswordReset\Parameters\AuthPasswordResetParameter;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
+use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\AuthPasswordResetRequest;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +18,7 @@ class AuthPasswordResetService
 {
     public function __construct(
         private readonly LoginInfoService $loginInfoService,
-        private readonly AuthBasicQuery $query,
+        private readonly UserService $userService,
     ) {}
 
     public function passwordReset(AuthPasswordResetParameter $params, AuthPasswordResetRequest $request): LoginInfoEntity
@@ -34,10 +33,7 @@ class AuthPasswordResetService
             throw new AppHttpException(500, 'パスワードリセットに失敗しました。');
         }
 
-        $loginInfoModel = $this->query->getLoginInfo(new AuthBasicParameter(
-            email: $params->email,
-            password: $params->password
-        ));
+        $loginInfoModel = $this->userService->getUserByEmail($params->email);
         Auth::login($loginInfoModel);
         $request->session()->regenerate();
 

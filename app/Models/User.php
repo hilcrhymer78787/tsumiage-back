@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 );
 
                 // Next.js 側URLに置き換え
-                $nextUrl = config('app.frontend_url') . "/email/verify/{$notifiable->id}/" . sha1($notifiable->email);
+                $nextUrl = config('app.frontend_url')."/email/verify?id={$notifiable->id}&hash=".sha1($notifiable->email);
 
                 return $nextUrl;
             }

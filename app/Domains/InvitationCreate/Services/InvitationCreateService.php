@@ -6,22 +6,21 @@ namespace App\Domains\InvitationCreate\Services;
 
 use App\Domains\InvitationCreate\Parameters\InvitationCreateParameter;
 use App\Domains\InvitationCreate\Queries\InvitationCreateQuery;
-use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\User\Services\UserService;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\InvitationCreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class InvitationCreateService
 {
     public function __construct(
         private readonly UserService $userService,
-        private readonly LoginInfoService $loginInfoService,
         private readonly InvitationCreateQuery $query,
     ) {}
 
     public function updateOrCreateInvitation(InvitationCreateParameter $params, InvitationCreateRequest $request): string
     {
-        $myUserId = $this->loginInfoService->getLoginInfo($request)->id;
+        $myUserId = Auth::id();
 
         // メールアドレスが存在するか確認
         $targetUser = $this->userService->getUserByEmail($params->email);

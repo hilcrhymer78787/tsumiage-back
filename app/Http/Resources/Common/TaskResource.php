@@ -20,6 +20,7 @@ class TaskResource extends JsonResource
             'id' => $this->resource->getTaskId(),
             'name' => $this->resource->getTaskName(),
             'createdAt' => $this->resource->getCreatedAt(),
+            'deletedAt' => $this->resource->getDeletedAt(),
             'work' => new WorkResource($workEntity),
         ];
     }

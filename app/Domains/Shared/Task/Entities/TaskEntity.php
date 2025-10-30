@@ -10,6 +10,7 @@ class TaskEntity
         private readonly int $taskId,
         private readonly string $taskName,
         private readonly ?string $createdAt,
+        private readonly ?string $deletedAt,
         private readonly ?int $taskSortKey,
         private readonly WorkEntity $workEntity,
     ) {}
@@ -27,6 +28,11 @@ class TaskEntity
     public function getCreatedAt(): ?string
     {
         return $this->createdAt;
+    }
+
+    public function getDeletedAt(): ?string
+    {
+        return $this->deletedAt;
     }
 
     public function getWorkEntity(): WorkEntity

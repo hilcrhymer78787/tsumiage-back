@@ -7,17 +7,25 @@ use App\Models\Work;
 
 class TaskDeleteQuery
 {
-    public function deleteTask(int $taskId, int $userId): int
+    public function deleteTask(int $taskId, int $userId, ?bool $isHardDelete = false): int
     {
-        return Task::where('task_id', $taskId)
-            ->where('task_user_id', $userId)
-            ->delete();
+        $query = Task::where('task_id', $taskId)
+            ->where('task_user_id', $userId);
+        if ($isHardDelete) {
+            return $query->forceDelete();
+        }
+
+        return $query->delete();
     }
 
-    public function deleteWork(int $taskId, int $userId): int
+    public function deleteWork(int $taskId, int $userId, ?bool $isHardDelete = false): int
     {
-        return Work::where('work_task_id', $taskId)
-            ->where('work_user_id', $userId)
-            ->delete();
+        $query = Work::where('work_task_id', $taskId)
+            ->where('work_user_id', $userId);
+        if ($isHardDelete) {
+            return $query->forceDelete();
+        }
+
+        return $query->delete();
     }
 }

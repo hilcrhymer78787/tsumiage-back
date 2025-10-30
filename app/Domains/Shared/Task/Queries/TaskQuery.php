@@ -25,8 +25,13 @@ class TaskQuery
         Task::where('task_user_id', $userId)->delete();
     }
 
-    public function getTaskById(int $taskId): ?Task
+    public function getTaskById(int $taskId, ?bool $withTrashed = false): ?Task
     {
-        return Task::where('task_id', $taskId)->first();
+        $query = Task::where('task_id', $taskId);
+        if ($withTrashed) {
+            $query->withTrashed();
+        }
+
+        return $query->first();
     }
 }

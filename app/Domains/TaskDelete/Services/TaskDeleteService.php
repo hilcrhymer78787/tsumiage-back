@@ -23,8 +23,9 @@ class TaskDeleteService
     {
         $userId = $this->loginInfoService->getLoginInfo($request)->id;
         $taskId = $params->id;
+        $isHardDelete = $params->isHardDelete;
 
-        $taskModel = $this->taskQuery->getTaskById($taskId);
+        $taskModel = $this->taskQuery->getTaskById($taskId, $isHardDelete);
         if (! $taskModel) {
             throw new AppHttpException(404, 'タスクが存在しません');
         }
@@ -34,12 +35,12 @@ class TaskDeleteService
             throw new AppHttpException(403, '自分のタスク以外を削除することはできません');
         }
 
-        $num = $this->query->deleteTask($taskId, $userId);
+        $num = $this->query->deleteTask($taskId, $userId, $isHardDelete);
         if (! $num) {
             throw new AppHttpException(500, 'タスクを削除できませんでした');
         }
 
-        $this->query->deleteWork($taskId, $userId);
+        $this->query->deleteWork($taskId, $userId, $isHardDelete);
 
         return 'タスクを削除しました';
     }

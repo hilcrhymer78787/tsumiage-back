@@ -23,6 +23,7 @@ class TaskFactory
             taskId: $taskModel->task_id,
             taskName: $taskModel->task_name,
             createdAt: $taskModel->created_at,
+            deletedAt: $taskModel->deleted_at,
             taskSortKey: $taskModel->task_sort_key,
             workEntity: $workEntity,
         );

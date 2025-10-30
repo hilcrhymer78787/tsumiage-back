@@ -10,11 +10,12 @@ class TaskReadQuery
 {
     public function getTasks(TaskReadParameter $params): Collection
     {
-        return Task::where('task_user_id', $params->userId)
+        $query = Task::where('task_user_id', $params->userId)
             ->select(
                 'tasks.task_id',
                 'tasks.task_name',
                 'tasks.created_at',
+                'tasks.deleted_at',
                 'tasks.task_sort_key',
             )
             ->orderBy('task_sort_key')
@@ -28,7 +29,13 @@ class TaskReadQuery
                         'works.work_state',
                     )
                     ->where('work_date', $params->date);
-            }])
-            ->get();
+            }]);
+
+        // 論理削除済みのみ取得
+        if ($params->isOnlyTrashed) {
+            $query->onlyTrashed();
+        }
+
+        return $query->get();
     }
 }

@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'tasks';
 
     protected $primaryKey = 'task_id';
 
     protected $fillable = [
-        'task_id',
         'task_user_id',
         'task_name',
         'task_sort_key',
@@ -27,7 +28,7 @@ class Task extends Model
         'task_sort_key' => 'integer',
     ];
 
-    public function works()
+    public function works(): HasMany
     {
         return $this->hasMany(Work::class, 'work_task_id', 'task_id');
     }

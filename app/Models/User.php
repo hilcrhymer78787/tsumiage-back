@@ -7,7 +7,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\URL;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -35,7 +34,8 @@ class User extends Authenticatable implements MustVerifyEmail
                     'id' => $notifiable->id,
                     'hash' => sha1($notifiable->email),
                 ]);
-                return config('app.frontend_url') . "/email?{$params}";
+
+                return config('app.frontend_url')."/email?{$params}";
             }
 
             public function toMail($notifiable)

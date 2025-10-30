@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Domains\TaskDelete\Parameters;
+namespace App\Domains\TaskRestore\Parameters;
 
-readonly class TaskDeleteParameter
+readonly class TaskRestoreParameter
 {
     public function __construct(
         public int $id,
-        public ?bool $isHardDelete,
     ) {}
 
     public static function makeParams(array $validated): self
     {
         return new self(
             id: $validated['id'],
-            isHardDelete: $validated['is_hard_delete'] ?? null,
         );
     }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\InvitationReadController;
 use App\Http\Controllers\InvitationUpdateController;
 use App\Http\Controllers\TaskCreateController;
 use App\Http\Controllers\TaskDeleteController;
+use App\Http\Controllers\TaskRestoreController;
 use App\Http\Controllers\TaskReadController;
 use App\Http\Controllers\TaskSortController;
 use App\Http\Controllers\UserCreateController;
@@ -59,6 +60,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']);
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
+        Route::post('/task/restore', [TaskRestoreController::class, 'index']);
 
         // work
         Route::get('/work/read/month', [WorkReadMonthController::class, 'index']);

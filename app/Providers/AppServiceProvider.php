@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
             $schedule->command('backup:database')->dailyAt('23:00');
+            $schedule->command('purge:old-deleted')->dailyAt('00:00');
         });
     }
 }

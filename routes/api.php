@@ -32,7 +32,7 @@ Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 Route::middleware(['web'])->group(function () {
 
     // user（認証前）
-    Route::post('/user/create', [UserCreateController::class, 'index']);
+    Route::post('/user/create', [UserCreateController::class, 'index']); // TODO🗒️🐞
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🗒️
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
@@ -49,7 +49,7 @@ Route::middleware(['web'])->group(function () {
 
         // task
         Route::get('/task/read', [TaskReadController::class, 'index']);
-        Route::post('/task/create', [TaskCreateController::class, 'index']);
+        Route::post('/task/create', [TaskCreateController::class, 'index']); // TODO🔥
         Route::post('/task/sort', [TaskSortController::class, 'index']);
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
         Route::post('/task/restore', [TaskRestoreController::class, 'index']);

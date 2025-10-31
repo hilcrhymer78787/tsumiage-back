@@ -31,27 +31,19 @@ Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
 
-    // メール認証
-    // TODO ルート名検討
-    // 🔥2リンクを踏む
-    Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
-
     // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
-    // TODO ルート名検討
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
-    // TODO ルート名検討
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
+    Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
-        // TODO ルート名検討
-        // 🔥1メールを送る
         Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']); // TODO ブラウザが違う、PWAの場合にバグ
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 

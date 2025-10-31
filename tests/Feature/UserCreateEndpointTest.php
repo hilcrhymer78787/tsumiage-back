@@ -14,8 +14,6 @@ class UserCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function 新規ユーザーを作成できる(): void
     {
-        Storage::fake('public');
-
         $response = $this->postJson('/api/user/create', [
             'name' => 'testuser',
             'email' => 'test@example.com',
@@ -41,7 +39,7 @@ class UserCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function ユーザー情報を更新できる(): void
     {
-        // ユーザー作成＆ログイン
+        // ユーザー作成＆ログイン TODO: 共通化
         $user = User::create([
             'name' => 'oldname',
             'email' => 'test@example.com',

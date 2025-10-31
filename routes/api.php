@@ -45,7 +45,7 @@ Route::middleware(['web'])->group(function () {
         // user（認証後）
         Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
         Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']); // TODO: test
-        Route::delete('/user/delete', [UserDeleteController::class, 'index']); // TODO: test
+        Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task
         Route::get('/task/read', [TaskReadController::class, 'index']); // TODO: test

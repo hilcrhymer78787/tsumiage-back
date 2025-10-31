@@ -12,35 +12,35 @@ class AuthBasicEndpointTest extends TestCase
 {
     use RefreshDatabase;
 
-    // public function test_basic_auth_success(): void
-    // {
-    //     // 1. ユーザー作成
-    //     $user = User::create([
-    //         'id' => 1,
-    //         'email' => 'test@example.com',
-    //         'name' => 'Test User',
-    //         'user_img' => null,
-    //         'password' => bcrypt('password'), // ← ここを追加
-    //     ]);
+    public function test_basic_auth_success(): void
+    {
+        // 1. ユーザー作成
+        $user = User::create([
+            'id' => 1,
+            'email' => 'test@example.com',
+            'name' => 'Test User',
+            'user_img' => null,
+            'password' => bcrypt('password'), // ← ここを追加
+        ]);
 
-    //     // 2. 正しいメール・パスワードでPOST
-    //     $response = $this->postJson('/api/user/auth/basic', [
-    //         'email' => 'test@example.com',
-    //         'password' => 'password',
-    //     ]);
+        // 2. 正しいメール・パスワードでPOST
+        $response = $this->postJson('/api/user/auth/basic', [
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
 
-    //     // 3. 検証
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'data' => [
-    //                 'id' => $user->id,
-    //                 'email' => $user->email,
-    //                 'name' => $user->name,
-    //                 'user_img' => $user->user_img,
-    //                 'email_verified_at' => $user->email_verified_at,
-    //             ],
-    //         ]);
-    // }
+        // 3. 検証
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                    'user_img' => $user->user_img,
+                    'email_verified_at' => $user->email_verified_at,
+                ],
+            ]);
+    }
 
     // public function test_basic_auth_email_not_found(): void
     // {

@@ -14,10 +14,8 @@ class AuthTestEndpointTest extends TestCase
     {
         // 1. テストユーザー作成
         $user = User::create([
-            'id' => 1,
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'user_img' => null,
+            'email' => 'user1@gmail.com',
+            'name' => 'user1',
             'password' => bcrypt('password'), // ← ここを追加
         ]);
 

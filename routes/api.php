@@ -35,35 +35,35 @@ Route::middleware(['web'])->group(function () {
     Route::post('/user/create', [UserCreateController::class, 'index']); // 🗒️
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🗒️
-    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
-    Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']);
-    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);
-    Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']);
+    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']); // TODO: test
+    Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']); // TODO: test
+    Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']); // TODO: test
+    Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']); // TODO: test
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user（認証後）
-        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
-        Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']);
-        Route::delete('/user/delete', [UserDeleteController::class, 'index']);
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']); // TODO: test
+        Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']); // TODO: test
+        Route::delete('/user/delete', [UserDeleteController::class, 'index']); // TODO: test
 
         // task
-        Route::get('/task/read', [TaskReadController::class, 'index']);
-        Route::post('/task/create', [TaskCreateController::class, 'index']); // TODO🔥
-        Route::post('/task/sort', [TaskSortController::class, 'index']);
-        Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
-        Route::post('/task/restore', [TaskRestoreController::class, 'index']);
+        Route::get('/task/read', [TaskReadController::class, 'index']); // TODO: test
+        Route::post('/task/create', [TaskCreateController::class, 'index']); // 🗒️
+        Route::post('/task/sort', [TaskSortController::class, 'index']); // TODO: test
+        Route::delete('/task/delete', [TaskDeleteController::class, 'index']); // TODO: test
+        Route::post('/task/restore', [TaskRestoreController::class, 'index']); // TODO: test
 
         // work
-        Route::get('/work/read/month', [WorkReadMonthController::class, 'index']);
-        Route::post('/work/create', [WorkCreateController::class, 'index']);
-        Route::delete('/work/delete', [WorkDeleteController::class, 'index']);
-        Route::delete('/work/reset', [WorkResetController::class, 'index']);
+        Route::get('/work/read/month', [WorkReadMonthController::class, 'index']); // TODO: test
+        Route::post('/work/create', [WorkCreateController::class, 'index']); // TODO: test
+        Route::delete('/work/delete', [WorkDeleteController::class, 'index']); // TODO: test
+        Route::delete('/work/reset', [WorkResetController::class, 'index']); // TODO: test
 
         // invitation
-        Route::get('/invitation/read', [InvitationReadController::class, 'index']);
-        Route::post('/invitation/create', [InvitationCreateController::class, 'index']);
-        Route::put('/invitation/update', [InvitationUpdateController::class, 'index']);
-        Route::delete('/invitation/delete', [InvitationDeleteController::class, 'index']);
+        Route::get('/invitation/read', [InvitationReadController::class, 'index']); // TODO: test
+        Route::post('/invitation/create', [InvitationCreateController::class, 'index']); // TODO: test
+        Route::put('/invitation/update', [InvitationUpdateController::class, 'index']); // TODO: test
+        Route::delete('/invitation/delete', [InvitationDeleteController::class, 'index']); // TODO: test
     });
 });

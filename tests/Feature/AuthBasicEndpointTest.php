@@ -100,7 +100,7 @@ class AuthBasicEndpointTest extends TestCase
                 'data' => [
                     'errors' => [
                         'email' => [
-                            'email はメールアドレス形式でなければなりません。'
+                            'email はメールアドレス形式でなければなりません。',
                         ],
                     ],
                 ],

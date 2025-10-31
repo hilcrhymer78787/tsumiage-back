@@ -77,12 +77,12 @@ class UserCreateService
         $this->storeUserFile($params, $request);
 
         if ($params->userImg !== $params->imgOldname) {
-            Storage::delete('public/' . $params->imgOldname);
+            Storage::delete('public/'.$params->imgOldname);
         }
 
         // 更新後のユーザーデータを取得
         $userModel = User::find($loginInfoModel->id);
-        
+
         return $this->toLoginInfoEntity($userModel);
     }
 

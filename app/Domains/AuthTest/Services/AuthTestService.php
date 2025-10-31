@@ -19,7 +19,7 @@ class AuthTestService
 
     public function testAuth(Request $request): LoginInfoEntity
     {
-        $loginInfoModel = $this->userService->getUserByEmail("user1@gmail.com");
+        $loginInfoModel = $this->userService->getUserByEmail('user1@gmail.com');
         if (! $loginInfoModel) {
             throw new AppHttpException(404, 'テストユーザーが見つかりませんでした');
         }

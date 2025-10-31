@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserCreateEndpointTest extends TestCase
@@ -67,7 +66,6 @@ class UserCreateEndpointTest extends TestCase
             'email' => 'test@example.com',
         ]);
     }
-
 
     #[\PHPUnit\Framework\Attributes\Test]
     public function 同じメールアドレスは登録できない()

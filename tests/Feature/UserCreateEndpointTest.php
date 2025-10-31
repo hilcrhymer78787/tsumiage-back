@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -15,13 +14,12 @@ class UserCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function 新規ユーザーを作成できる(): void
     {
-        // Storage::fake('public');
+        Storage::fake('public');
 
         $response = $this->postJson('/api/user/create', [
             'name' => 'testuser',
             'email' => 'testuser@example.com',
             'password' => 'password123',
-            // 'file' => UploadedFile::fake()->image('avatar.png'),
         ]);
 
         $response->assertStatus(200)
@@ -38,9 +36,6 @@ class UserCreateEndpointTest extends TestCase
             'email' => 'testuser@example.com',
             'name' => 'testuser',
         ]);
-
-        // ファイルが保存されているか
-        // Storage::disk('public')->assertExists($response->json('data.user_img'));
     }
 
     // /** @test */

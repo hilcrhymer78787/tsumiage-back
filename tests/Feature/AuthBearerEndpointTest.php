@@ -40,8 +40,6 @@ class AuthBearerEndpointTest extends TestCase
     {
         $response = $this->getJson('/api/user/auth/bearer');
 
-        dump($response->json());
-
         $response->assertStatus(500)
             ->assertJson([
                 'status' => 500,

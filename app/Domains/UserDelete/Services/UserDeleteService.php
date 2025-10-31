@@ -10,6 +10,7 @@ use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
 use App\Domains\Shared\Task\Queries\TaskQuery;
 use App\Domains\Shared\Work\Queries\WorkQuery;
 use App\Domains\UserDelete\Queries\UserDeleteQuery;
+use App\Http\Exceptions\AppHttpException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserDeleteService
@@ -28,7 +29,10 @@ class UserDeleteService
         $loginInfoModel = $this->loginInfoService->getLoginInfo($request);
 
         $userId = $loginInfoModel->id;
-        $this->query->deleteUser($userId);
+        $num = $this->query->deleteUser($userId);
+        if (! $num) {
+            throw new AppHttpException(500, 'ユーザーを削除できませんでした');
+        }
         $this->taskQuery->deleteTaskByUserId($userId);
         $this->workQuery->deleteWorkByUserId($userId);
         $this->invitationQuery->deleteInvitationByUserId($userId);

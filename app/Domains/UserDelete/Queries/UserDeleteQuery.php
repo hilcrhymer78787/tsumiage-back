@@ -6,8 +6,8 @@ use App\Models\User;
 
 class UserDeleteQuery
 {
-    public function deleteUser(int $userId): void
+    public function deleteUser(int $userId): int
     {
-        User::where('id', $userId)->delete();
+        return User::where('id', $userId)->delete();
     }
 }

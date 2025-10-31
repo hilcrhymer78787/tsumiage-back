@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
-use App\Models\Work;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -26,15 +26,15 @@ use App\Http\Controllers\WorkResetController;
 use Illuminate\Support\Facades\Route;
 
 // テストルート
-Route::get('/test', fn () => ['message' => 'this is test 1']); // 🗒️
+Route::get('/test', fn () => ['message' => 'this is test 1']);
 
 // --- Cookie 認証が必要なルートは web ミドルウェア必須 ---
 Route::middleware(['web'])->group(function () {
 
     // user（認証前）
-    Route::post('/user/create', [UserCreateController::class, 'index']); // 🗒️
-    Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🗒️
+    Route::post('/user/create', [UserCreateController::class, 'index']);
+    Route::get('/user/auth/test', [AuthTestController::class, 'index']);
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']); // TODO: test
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']); // TODO: test
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']); // TODO: test
@@ -43,20 +43,20 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
 
         // user（認証後）
-        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']); // TODO: test
+        Route::get('/user/auth/bearer', [AuthBearerController::class, 'index']);
         Route::post('/user/auth/email/verify/send', [AuthEmailVerifyController::class, 'index']); // TODO: test
         Route::delete('/user/delete', [UserDeleteController::class, 'index']); // TODO: test
 
         // task
         Route::get('/task/read', [TaskReadController::class, 'index']); // TODO: test
-        Route::post('/task/create', [TaskCreateController::class, 'index']); // 🗒️
+        Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']); // TODO: test
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']); // TODO: test
         Route::post('/task/restore', [TaskRestoreController::class, 'index']); // TODO: test
 
         // work
         Route::get('/work/read/month', [WorkReadMonthController::class, 'index']); // TODO: test
-        Route::post('/work/create', [WorkCreateController::class, 'index']);  // 🗒️
+        Route::post('/work/create', [WorkCreateController::class, 'index']);
         Route::delete('/work/delete', [WorkDeleteController::class, 'index']); // TODO: test
         Route::delete('/work/reset', [WorkResetController::class, 'index']); // TODO: test
 

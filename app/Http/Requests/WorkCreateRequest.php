@@ -11,7 +11,7 @@ class WorkCreateRequest extends BaseFormRequest
         return [
             'state' => 'required|integer|in:0,1,2',
             'date' => 'required|date_format:Y-m-d',
-            'task_id' => 'required|integer|exists:tasks,task_id',
+            'task_id' => 'required|integer',
         ];
     }
 
@@ -27,7 +27,6 @@ class WorkCreateRequest extends BaseFormRequest
 
             'task_id.required' => 'タスクIDは必須です。',
             'task_id.integer' => 'タスクIDは整数でなければなりません。',
-            'task_id.exists' => '指定されたタスクは存在しません。',
         ];
     }
 }

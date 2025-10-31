@@ -23,7 +23,7 @@ class WorkCreateService
 
         $isExistMyTask = $this->query->getIsExistMyTask($params->taskId, $userId);
         if (! $isExistMyTask) {
-            throw new AppHttpException(403, '自分のタスク以外は更新できません');
+            throw new AppHttpException(404, '更新するタスクが存在しません');
         }
 
         $this->query->updateOrCreateWork($params, $userId);

@@ -2,14 +2,15 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Task;
 use App\Models\Work;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class PurgeOldDeleted extends Command
 {
     protected $signature = 'purge:old-deleted';
+
     protected $description = '論理削除から24時間以上経過したデータを物理削除';
 
     public function handle()

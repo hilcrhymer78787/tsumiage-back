@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Domains\TaskRestore\Queries;
 
 use App\Models\Task;

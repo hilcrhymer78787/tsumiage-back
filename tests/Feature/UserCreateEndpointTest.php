@@ -39,7 +39,7 @@ class UserCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function ユーザー情報を更新できる(): void
     {
-        // ユーザー作成＆ログイン TODO: 共通化
+        // ユーザー作成＆ログイン
         $user = User::create([
             'name' => 'oldname',
             'email' => 'test@example.com',

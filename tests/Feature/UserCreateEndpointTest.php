@@ -18,14 +18,14 @@ class UserCreateEndpointTest extends TestCase
 
         $response = $this->postJson('/api/user/create', [
             'name' => 'testuser',
-            'email' => 'testuser@example.com',
+            'email' => 'test@example.com',
             'password' => 'password123',
         ]);
 
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'email' => 'testuser@example.com',
+                    'email' => 'test@example.com',
                     'name' => 'testuser',
                     'user_img' => null,
                     'email_verified_at' => null,
@@ -33,17 +33,51 @@ class UserCreateEndpointTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'testuser@example.com',
+            'email' => 'test@example.com',
             'name' => 'testuser',
         ]);
     }
 
+    // #[\PHPUnit\Framework\Attributes\Test]
+    // public function ユーザー情報を更新できる(): void
+    // {
+    //     $user = User::create([
+    //         'name' => 'oldname',
+    //         'email' => 'test@example.com',
+    //         'password' => bcrypt('password'),
+    //     ]);
+
+    //     // ここで actingAs すればセッションログイン状態になる
+    //     $this->actingAs($user);
+
+    //     // 更新
+    //     $response = $this->postJson('/api/user/create', [
+    //         'id' => $user->id,
+    //         'name' => 'newname',
+    //         'email' => 'test@example.com',
+    //     ]);
+
+    //     $response->assertStatus(200)
+    //         ->assertJson([
+    //             'data' => [
+    //                 'name' => 'newname',
+    //                 'email' => 'test@example.com',
+    //             ],
+    //         ]);
+
+    //     $this->assertDatabaseHas('users', [
+    //         'name' => 'newname',
+    //         'email' => 'test@example.com',
+    //     ]);
+    // }
+
+
     #[\PHPUnit\Framework\Attributes\Test]
     public function 同じメールアドレスは登録できない()
     {
-        $userArray =[
+        $userArray = [
             'name' => 'testuser',
-            'email' => 'testuser@example.com',
+            'email' => 'test@example.com',
             'password' => 'password123',
         ];
 

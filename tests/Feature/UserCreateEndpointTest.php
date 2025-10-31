@@ -38,33 +38,20 @@ class UserCreateEndpointTest extends TestCase
         ]);
     }
 
-    // /** @test */
-    // public function バリデーションエラーが返る()
-    // {
-    //     $response = $this->postJson('/api/user/create', [
-    //         'name' => '', // 必須
-    //         'email' => 'invalid-email',
-    //         'password' => '123', // 8文字未満
-    //     ]);
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function 同じメールアドレスは登録できない()
+    {
+        $userArray =[
+            'name' => 'testuser',
+            'email' => 'testuser@example.com',
+            'password' => 'password123',
+        ];
 
-    //     $response->assertStatus(422)
-    //              ->assertJsonValidationErrors(['name', 'email', 'password']);
-    // }
+        User::create($userArray);
 
-    // /** @test */
-    // public function 同じメールアドレスは登録できない()
-    // {
-    //     User::factory()->create([
-    //         'email' => 'existing@example.com',
-    //     ]);
+        $response = $this->postJson('/api/user/create', $userArray);
 
-    //     $response = $this->postJson('/api/user/create', [
-    //         'name' => 'newuser',
-    //         'email' => 'existing@example.com',
-    //         'password' => 'password123',
-    //     ]);
-
-    //     $response->assertStatus(409)
-    //              ->assertJsonFragment(['emailError' => 'このメールアドレスは既に登録されています']);
-    // }
+        $response->assertStatus(409)
+            ->assertJsonFragment(['emailError' => 'このメールアドレスは既に登録されています']);
+    }
 }

@@ -34,7 +34,7 @@ Route::middleware(['web'])->group(function () {
     // user（認証前）
     Route::post('/user/create', [UserCreateController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']); // 🗒️
-    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
+    Route::post('/user/auth/basic', [AuthBasicController::class, 'index']); // 🗒️
     Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']);
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']);

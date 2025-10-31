@@ -82,4 +82,28 @@ class AuthBasicEndpointTest extends TestCase
                 ],
             ]);
     }
+
+    // バリデーションエラーが発生しました。
+    public function test_basic_auth_email_invalid_format(): void
+    {
+        // 不正なメールアドレス形式
+        $response = $this->postJson('/api/user/auth/basic', [
+            'email' => 'invalid-email-format',
+            'password' => 'password',
+        ]);
+
+        // 検証
+        $response->assertStatus(422)
+            ->assertJson([
+                'status' => 422,
+                'message' => 'バリデーションエラーが発生しました。',
+                'data' => [
+                    'errors' => [
+                        'email' => [
+                            'email はメールアドレス形式でなければなりません。'
+                        ],
+                    ],
+                ],
+            ]);
+    }
 }

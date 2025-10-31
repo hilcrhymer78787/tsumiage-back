@@ -8,6 +8,7 @@ use App\Domains\Shared\Auth\Services\AuthService;
 use App\Domains\Shared\CheckIsExistEmail\Services\CheckIsExistEmailService;
 use App\Domains\Shared\LoginInfo\Entities\LoginInfoEntity;
 use App\Domains\Shared\LoginInfo\Services\LoginInfoService;
+use App\Domains\Shared\User\Services\UserService;
 use App\Domains\UserCreate\Parameters\UserCreateParameter;
 use App\Domains\UserCreate\Queries\UserCreateQuery;
 use App\Http\Exceptions\AppHttpException;
@@ -22,6 +23,7 @@ class UserCreateService
         private readonly CheckIsExistEmailService $checkIsExistEmailService,
         private readonly UserCreateQuery $query,
         private readonly AuthService $authService,
+        private readonly UserService $userService,
     ) {}
 
     public function upsertUser(UserCreateParameter $params, UserCreateRequest $request): LoginInfoEntity
@@ -75,12 +77,13 @@ class UserCreateService
         $this->storeUserFile($params, $request);
 
         if ($params->userImg !== $params->imgOldname) {
-            Storage::delete('public/'.$params->imgOldname);
+            Storage::delete('public/' . $params->imgOldname);
         }
 
-        $loginInfoModel = $this->loginInfoService->getLoginInfo($request);
-
-        return $this->toLoginInfoEntity($loginInfoModel);
+        // 更新後のユーザーデータを取得
+        $userModel = User::find($loginInfoModel->id);
+        
+        return $this->toLoginInfoEntity($userModel);
     }
 
     /**

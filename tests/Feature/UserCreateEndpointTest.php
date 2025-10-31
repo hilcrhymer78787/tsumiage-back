@@ -38,38 +38,37 @@ class UserCreateEndpointTest extends TestCase
         ]);
     }
 
-    // #[\PHPUnit\Framework\Attributes\Test]
-    // public function ユーザー情報を更新できる(): void
-    // {
-    //     $user = User::create([
-    //         'name' => 'oldname',
-    //         'email' => 'test@example.com',
-    //         'password' => bcrypt('password'),
-    //     ]);
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function ユーザー情報を更新できる(): void
+    {
+        // ユーザー作成＆ログイン
+        $user = User::create([
+            'name' => 'oldname',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $this->actingAs($user);
 
-    //     // ここで actingAs すればセッションログイン状態になる
-    //     $this->actingAs($user);
+        // 更新
+        $response = $this->postJson('/api/user/create', [
+            'id' => $user->id,
+            'name' => 'newname',
+            'email' => 'test@example.com',
+        ]);
 
-    //     // 更新
-    //     $response = $this->postJson('/api/user/create', [
-    //         'id' => $user->id,
-    //         'name' => 'newname',
-    //         'email' => 'test@example.com',
-    //     ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'name' => 'newname',
+                    'email' => 'test@example.com',
+                ],
+            ]);
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'data' => [
-    //                 'name' => 'newname',
-    //                 'email' => 'test@example.com',
-    //             ],
-    //         ]);
-
-    //     $this->assertDatabaseHas('users', [
-    //         'name' => 'newname',
-    //         'email' => 'test@example.com',
-    //     ]);
-    // }
+        $this->assertDatabaseHas('users', [
+            'name' => 'newname',
+            'email' => 'test@example.com',
+        ]);
+    }
 
 
     #[\PHPUnit\Framework\Attributes\Test]

@@ -42,13 +42,11 @@ class AuthTestEndpointTest extends TestCase
         // テストユーザーを作らずに呼ぶ
         $response = $this->getJson('/api/user/auth/test');
 
-        // TODO
-        $response->assertStatus(404)
-            ->assertJsonStructure([
-                'status',
-                'message',
-                'data',
-                'detail' => ['file', 'line', 'trace'],
-            ]);
+        // ステータスコードとJSON内容を検証
+        $response->assertJsonFragment([
+            'status' => 404,
+            'message' => 'テストユーザーが見つかりませんでした',
+            'data' => null,
+        ]);
     }
 }

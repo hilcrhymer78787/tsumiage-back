@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TaskUpsertEndpointTest extends TestCase
+class TaskCreateEndpointTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -16,7 +16,6 @@ class AuthBearerEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         $response = $this->getJson('/api/user/auth/bearer');
-        dump($response->json());
 
         $response->assertStatus(200)
             ->assertJson([

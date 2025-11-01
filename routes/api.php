@@ -59,10 +59,10 @@ Route::middleware(['web'])->group(function () {
         Route::post('/work/create', [WorkCreateController::class, 'index']);
         Route::delete('/work/delete', [WorkDeleteController::class, 'index']);
         Route::delete('/work/reset', [WorkResetController::class, 'index']);
-        
+
         // invitation
         Route::get('/invitation/read', [InvitationReadController::class, 'index']); // TODO: test
-        Route::post('/invitation/create', [InvitationCreateController::class, 'index']); // TODO: test
+        Route::post('/invitation/create', [InvitationCreateController::class, 'index']);
         Route::put('/invitation/update', [InvitationUpdateController::class, 'index']); // TODO: test
         Route::delete('/invitation/delete', [InvitationDeleteController::class, 'index']); // TODO: test
     });

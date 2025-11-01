@@ -31,9 +31,9 @@ class TaskSortEndpointTest extends FeatureTestCase
         // レスポンス確認
         $response->assertStatus(200)
             ->assertJson([
-                "data" => [
+                'data' => [
                     'message' => 'タスクの順番を変更しました',
-                ]
+                ],
             ]);
 
         // DBのタスクの並び順をtask_idの配列で取得

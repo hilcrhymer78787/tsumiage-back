@@ -48,7 +48,7 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/user/delete', [UserDeleteController::class, 'index']);
 
         // task
-        Route::get('/task/read', [TaskReadController::class, 'index']); // TODO: test
+        Route::get('/task/read', [TaskReadController::class, 'index']);
         Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']);
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']);

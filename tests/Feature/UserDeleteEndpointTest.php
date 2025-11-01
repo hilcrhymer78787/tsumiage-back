@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class UserDeleteEndpointTest extends TestCase
+class UserDeleteEndpointTest extends FeatureTestCase
 {
     use RefreshDatabase;
 
@@ -30,7 +30,7 @@ class UserDeleteEndpointTest extends TestCase
             'data' => ['message' => 'ユーザーを削除しました'],
         ]);
 
-        //DB確認
+        // DB確認
         $this->assertDatabaseMissing('users', [
             'email' => 'test@example.com',
             'name' => 'Test User',

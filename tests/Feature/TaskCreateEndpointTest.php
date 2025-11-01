@@ -3,24 +3,17 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class TaskCreateEndpointTest extends TestCase
+class TaskCreateEndpointTest extends FeatureTestCase
 {
     use RefreshDatabase;
 
     #[\PHPUnit\Framework\Attributes\Test]
     public function タスクを新規作成できる(): void
     {
-        // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $response = $this->postJson('/api/task/create', [
             'name' => '新しいタスク',
@@ -41,13 +34,7 @@ class TaskCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function 既存タスクを更新できる(): void
     {
-        // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([
@@ -78,13 +65,7 @@ class TaskCreateEndpointTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function 存在しないタスクを更新しようとするとエラーになる(): void
     {
-        // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $response = $this->postJson('/api/task/create', [
             'id' => 9999, // 存在しないID

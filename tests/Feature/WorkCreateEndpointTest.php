@@ -6,9 +6,9 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class WorkCreateEndpointTest extends TestCase
+class WorkCreateEndpointTest extends FeatureTestCase
 {
     use RefreshDatabase;
 

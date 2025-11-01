@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class AuthTestEndpointTest extends TestCase
+class AuthTestEndpointTest extends FeatureTestCase
 {
     use RefreshDatabase;
 

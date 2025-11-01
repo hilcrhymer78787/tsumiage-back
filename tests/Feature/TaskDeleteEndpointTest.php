@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class TaskDeleteEndpointTest extends TestCase
+class TaskDeleteEndpointTest extends FeatureTestCase
 {
     use RefreshDatabase;
 

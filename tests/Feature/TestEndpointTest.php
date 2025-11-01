@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use Tests\FeatureTestCase;
 
-class TestEndpointTest extends TestCase
+class TestEndpointTest extends FeatureTestCase
 {
     public function test_returns_test_message()
     {

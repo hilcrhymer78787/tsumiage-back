@@ -52,7 +52,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']); // TODO: test
         Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
-        Route::post('/task/restore', [TaskRestoreController::class, 'index']); // TODO: test
+        Route::post('/task/restore', [TaskRestoreController::class, 'index']);
 
         // work
         Route::get('/work/read/month', [WorkReadMonthController::class, 'index']); // TODO: test

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Task;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
@@ -18,10 +17,7 @@ class WorkCreateEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => 'タスク',
-            'task_user_id' => $user->id,
-        ]);
+        $task = $this->createTask($user);
 
         $response = $this->postJson('/api/work/create', [
             'task_id' => $task->task_id,
@@ -49,10 +45,7 @@ class WorkCreateEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => 'タスク',
-            'task_user_id' => $user->id,
-        ]);
+        $task = $this->createTask($user);
 
         // 活動情報作成
         $work = Work::create([

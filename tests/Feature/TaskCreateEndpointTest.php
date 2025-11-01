@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
@@ -37,10 +36,7 @@ class TaskCreateEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => '古いタスク',
-            'task_user_id' => $user->id,
-        ]);
+        $task = $this->createTask($user, ['task_name' => '古いタスク']);
 
         // タスク更新
         $response = $this->postJson('/api/task/create', [

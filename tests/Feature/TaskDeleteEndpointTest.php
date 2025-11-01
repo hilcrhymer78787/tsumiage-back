@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
@@ -17,10 +16,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => 'タスク',
-            'task_user_id' => $user->id,
-        ]);
+        $task = $this->createTask($user);
 
         // タスク削除
         $response = $this->deleteJson('/api/task/delete', [
@@ -37,7 +33,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
 
         // DB確認
         $this->assertSoftDeleted('tasks', [
-            'task_name' => 'タスク',
+            'task_name' => $task->task_name,
             'task_user_id' => $user->id,
         ]);
     }
@@ -49,10 +45,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => 'タスク',
-            'task_user_id' => $user->id,
-        ]);
+        $task = $this->createTask($user);
 
         // タスク削除
         $response = $this->deleteJson('/api/task/delete', [
@@ -86,6 +79,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
             'is_hard_delete' => false,
         ]);
 
+        // レスポンス確認
         $response->assertStatus(404)->assertJson([
             'status' => 404,
             'message' => 'タスクが存在しません',
@@ -97,13 +91,10 @@ class TaskDeleteEndpointTest extends FeatureTestCase
     public function 自分のタスク以外を削除することはできません(): void
     {
         // ユーザー作成＆ログイン
-        $user = $this->actingAsUser();
+        $this->actingAsUser();
 
         // タスク作成
-        $task = Task::create([
-            'task_name' => 'タスク',
-            'task_user_id' => 99999,
-        ]);
+        $task = $this->createTask(null, ['task_user_id' => 99999]);
 
         // タスク削除
         $response = $this->deleteJson('/api/task/delete', [
@@ -111,6 +102,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
             'is_hard_delete' => false,
         ]);
 
+        // レスポンス確認
         $response->assertStatus(403)->assertJson([
             'status' => 403,
             'message' => '自分のタスク以外を削除することはできません',

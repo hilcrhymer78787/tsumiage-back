@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
@@ -15,12 +14,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
     public function タスクを論理削除できる(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([
@@ -52,12 +46,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
     public function タスクを物理削除できる(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([
@@ -89,12 +78,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
     public function タスクが存在しません(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク削除
         $response = $this->deleteJson('/api/task/delete', [
@@ -113,12 +97,7 @@ class TaskDeleteEndpointTest extends FeatureTestCase
     public function 自分のタスク以外を削除することはできません(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
-use App\Models\User;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
@@ -16,12 +15,7 @@ class WorkCreateEndpointTest extends FeatureTestCase
     public function 活動情報を新規作成できる(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([
@@ -52,12 +46,7 @@ class WorkCreateEndpointTest extends FeatureTestCase
     public function 既存活動情報を更新できる(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // タスク作成
         $task = Task::create([
@@ -100,12 +89,7 @@ class WorkCreateEndpointTest extends FeatureTestCase
     public function 存在しないタスクの活動情報を更新しようとするとエラーになる(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // 活動情報更新
         $response = $this->postJson('/api/work/create', [

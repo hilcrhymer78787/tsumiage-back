@@ -14,12 +14,7 @@ class UserDeleteEndpointTest extends FeatureTestCase
     public function ユーザーを削除しました(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // APIリクエスト
         $response = $this->deleteJson('/api/user/delete');
@@ -41,12 +36,7 @@ class UserDeleteEndpointTest extends FeatureTestCase
     public function ユーザーを削除できませんでした(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         // ユーザー削除
         $user = User::where('id', $user->id)->delete();

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\FeatureTestCase;
 
@@ -14,12 +13,7 @@ class AuthBearerEndpointTest extends FeatureTestCase
     public function ベアラー認証成功(): void
     {
         // ユーザー作成＆ログイン
-        $user = User::create([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ]);
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $response = $this->getJson('/api/user/auth/bearer');
 

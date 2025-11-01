@@ -35,8 +35,7 @@ abstract class FeatureTestCase extends TestCase
     {
         $user ??= $this->user ?? $this->actingAsUser();
 
-        return Task::create(array_merge([
-            'task_name' => 'テストタスク',
+        return Task::factory()->create(array_merge([
             'task_user_id' => $user->id,
         ], $overrides));
     }

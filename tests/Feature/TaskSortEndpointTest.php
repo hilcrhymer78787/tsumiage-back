@@ -17,22 +17,9 @@ class TaskSortEndpointTest extends FeatureTestCase
         $user = $this->actingAsUser();
 
         // タスク作成（ソート順が0,1,2）
-        $tasks = collect([
-            Task::create([
-                'task_name' => 'タスク1',
-                'task_user_id' => $user->id,
-                'task_sort_key' => 0,
-            ]),
-            Task::create([
-                'task_name' => 'タスク2',
-                'task_user_id' => $user->id,
-                'task_sort_key' => 1,
-            ]),
-            Task::create([
-                'task_name' => 'タスク3',
-                'task_user_id' => $user->id,
-                'task_sort_key' => 2,
-            ]),
+        $tasks = Task::factory()->count(3)->create([
+            'task_user_id' => $user->id,
+            'task_sort_key' => 0,
         ]);
 
         // 並び替えのリクエストデータ（ID順を逆にする例）
@@ -49,18 +36,13 @@ class TaskSortEndpointTest extends FeatureTestCase
                 ]
             ]);
 
+        // DBのタスクの並び順をtask_idの配列で取得
+        $dbTaskIds = Task::where('task_user_id', $user->id)
+            ->orderBy('task_sort_key')
+            ->pluck('task_id')
+            ->toArray();
+
         // DBの並び順確認
-        $this->assertEquals(
-            $ids[0],
-            Task::where('task_user_id', $user->id)->orderBy('task_sort_key')->first()->task_id
-        );
-        $this->assertEquals(
-            $ids[1],
-            Task::where('task_user_id', $user->id)->orderBy('task_sort_key')->skip(1)->first()->task_id
-        );
-        $this->assertEquals(
-            $ids[2],
-            Task::where('task_user_id', $user->id)->orderBy('task_sort_key')->skip(2)->first()->task_id
-        );
+        $this->assertEquals($ids, $dbTaskIds);
     }
 }

@@ -10,7 +10,7 @@ class WorkResetQuery
 {
     public function resetWork(int $userId): int
     {
-        return Work::where('work_user_id', $userId)->delete();
+        return Work::where('work_user_id', $userId)->forceDelete();
     }
 
     public function taskUpdate(int $userId): int

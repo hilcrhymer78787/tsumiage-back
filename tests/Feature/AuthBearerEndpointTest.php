@@ -12,10 +12,11 @@ class AuthBearerEndpointTest extends FeatureTestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function ベアラー認証成功(): void
     {
-        // ユーザー作成＆ログイン
+        // ユーザー作成＆ログイン（Factory利用）
         $user = $this->actingAsUser();
 
         $response = $this->getJson('/api/user/auth/bearer');
+        dump($response->json());
 
         $response->assertStatus(200)
             ->assertJson([

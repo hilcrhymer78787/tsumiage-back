@@ -12,16 +12,14 @@ abstract class FeatureTestCase extends TestCase
     protected ?User $user = null;
 
     /**
-     * テスト用ユーザーを作成してログインする
+     * テスト用ユーザーを Factory で作成してログインする
      */
     protected function actingAsUser(array $overrides = []): User
     {
-        $this->user = User::create(array_merge([
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'),
-        ], $overrides));
+        // Factoryを使ってUser生成
+        $this->user = User::factory()->create($overrides);
 
+        // ログイン状態に設定
         $this->actingAs($this->user);
 
         return $this->user;

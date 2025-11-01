@@ -14,11 +14,10 @@ class AuthBasicEndpointTest extends FeatureTestCase
     // 成功
     public function test_basic_auth_success(): void
     {
-        // 1. ユーザー作成
-        $user = User::create([
+        // 1. factoryでユーザー作成
+        $user = User::factory()->create([
             'email' => 'test@example.com',
-            'name' => 'Test User',
-            'password' => bcrypt('password'), // ← ここを追加
+            'password' => bcrypt('password'),
         ]);
 
         // 2. 正しいメール・パスワードでPOST
@@ -60,10 +59,9 @@ class AuthBasicEndpointTest extends FeatureTestCase
     // パスワードが間違っています
     public function test_basic_auth_password_incorrect(): void
     {
-        // 1. 正しいメール、違うパスワード
-        User::create([
+        // 1. factoryで正しいパスワードをもつユーザー作成
+        User::factory()->create([
             'email' => 'test@example.com',
-            'name' => 'Test User',
             'password' => Hash::make('correct-password'),
         ]);
 
@@ -86,13 +84,11 @@ class AuthBasicEndpointTest extends FeatureTestCase
     // バリデーションエラーが発生しました。
     public function test_basic_auth_email_invalid_format(): void
     {
-        // 不正なメールアドレス形式
         $response = $this->postJson('/api/user/auth/basic', [
             'email' => 'invalid-email-format',
             'password' => 'password',
         ]);
 
-        // 検証
         $response->assertStatus(422)
             ->assertJson([
                 'status' => 422,

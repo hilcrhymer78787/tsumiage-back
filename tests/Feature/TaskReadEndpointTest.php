@@ -19,7 +19,7 @@ class TaskReadEndpointTest extends FeatureTestCase
             'task_user_id' => $user->id,
         ]);
 
-        $response = $this->getJson('/api/task/read?' . http_build_query([
+        $response = $this->getJson('/api/task/read?'.http_build_query([
             'is_only_trashed' => false,
             'user_id' => $user->id,
             'date' => date('Y-m-d'),
@@ -29,7 +29,7 @@ class TaskReadEndpointTest extends FeatureTestCase
             ->assertJson([
                 'data' => [
                     'date' => date('Y-m-d'),
-                    'tasks' => $tasks->map(fn($task) => [
+                    'tasks' => $tasks->map(fn ($task) => [
                         'id' => $task->task_id,
                         'name' => $task->task_name,
                         'createdAt' => $task->created_at,

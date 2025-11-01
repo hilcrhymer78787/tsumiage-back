@@ -19,7 +19,7 @@ class InvitationReadController extends Controller
 
             return new InvitationReadResource($invitationReadEntity);
         } catch (Throwable $error) {
-            // debugError($error);
+
             return new ErrorResource($error);
         }
     }

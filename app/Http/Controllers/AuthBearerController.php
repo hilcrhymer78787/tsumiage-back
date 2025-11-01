@@ -19,7 +19,7 @@ class AuthBearerController extends Controller
 
             return new LoginInfoResource($loginInfoEntity);
         } catch (Throwable $error) {
-            // debugError($error);
+
             return new ErrorResource($error);
         }
     }

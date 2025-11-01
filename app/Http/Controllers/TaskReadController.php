@@ -21,7 +21,7 @@ class TaskReadController extends Controller
 
             return new TaskReadResource($taskReadEntity);
         } catch (Throwable $error) {
-            // debugError($error);
+
             return new ErrorResource($error);
         }
     }

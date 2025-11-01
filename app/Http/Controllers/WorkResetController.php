@@ -19,7 +19,7 @@ class WorkResetController extends Controller
 
             return new SuccessResource($message);
         } catch (Throwable $error) {
-            // debugError($error);
+
             return new ErrorResource($error);
         }
     }

@@ -47,10 +47,10 @@ abstract class FeatureTestCase extends TestCase
     protected function createWork(Task $task, User $user, ?array $overrides = []): Work
     {
         return Work::create(array_merge([
-            'work_date' => date("Y-m-d"),
+            'work_date' => date('Y-m-d'),
             'work_task_id' => $task->task_id,
             'work_user_id' => $user->id,
-            'created_at' => date("Y-m-d"),
+            'created_at' => date('Y-m-d'),
             'work_state' => 1,
         ], $overrides));
     }

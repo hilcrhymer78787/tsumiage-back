@@ -21,7 +21,7 @@ class WorkReadMonthController extends Controller
 
             return new WorkReadMonthResource($workReadMonthEntity);
         } catch (Throwable $error) {
-            // debugError($error);
+
             return new ErrorResource($error);
         }
     }

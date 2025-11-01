@@ -57,7 +57,7 @@ Route::middleware(['web'])->group(function () {
         // work
         Route::get('/work/read/month', [WorkReadMonthController::class, 'index']); // TODO: test
         Route::post('/work/create', [WorkCreateController::class, 'index']);
-        Route::delete('/work/delete', [WorkDeleteController::class, 'index']); // TODO: test
+        Route::delete('/work/delete', [WorkDeleteController::class, 'index']);
         Route::delete('/work/reset', [WorkResetController::class, 'index']); // TODO: test
 
         // invitation

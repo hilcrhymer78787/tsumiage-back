@@ -35,7 +35,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('/user/create', [UserCreateController::class, 'index']);
     Route::get('/user/auth/test', [AuthTestController::class, 'index']);
     Route::post('/user/auth/basic', [AuthBasicController::class, 'index']);
-    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']); // TODO: test
+    Route::post('/user/auth/password/forgot', [AuthPasswordForgotController::class, 'index']);
     Route::post('/user/auth/password/reset', [AuthPasswordResetController::class, 'index']); // TODO: test
     Route::post('/user/auth/logout', [AuthLogoutController::class, 'index']); // TODO: test
     Route::get('/user/auth/email/verify/{id}/{hash}', [EmailVerifyIdHashController::class, 'index']); // TODO: test

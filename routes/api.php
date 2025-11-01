@@ -51,7 +51,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/task/read', [TaskReadController::class, 'index']); // TODO: test
         Route::post('/task/create', [TaskCreateController::class, 'index']);
         Route::post('/task/sort', [TaskSortController::class, 'index']); // TODO: test
-        Route::delete('/task/delete', [TaskDeleteController::class, 'index']); // TODO: test
+        Route::delete('/task/delete', [TaskDeleteController::class, 'index']);
         Route::post('/task/restore', [TaskRestoreController::class, 'index']); // TODO: test
 
         // work

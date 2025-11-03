@@ -37,7 +37,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./docker/mysql-init:/docker-entrypoint-initdb.d  # 初期化スクリプトをマウント
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d # 初期化スクリプトをマウント
     networks:
       - app-network
 
@@ -52,6 +52,14 @@ services:
       - mysql
     ports:
       - "8080:80"
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - app-network
 

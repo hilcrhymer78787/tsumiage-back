@@ -29,3 +29,7 @@ php artisan test
 【myslq】
 docker compose exec mysql bash
 mysql -u root -ppassword -h mysql -P 3306
+
+【レディスのワーカーを起動させる】
+docker compose exec app bash
+php artisan queue:work redis --queue=default

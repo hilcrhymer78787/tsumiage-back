@@ -13,6 +13,7 @@ use App\Domains\UserCreate\Parameters\UserCreateParameter;
 use App\Domains\UserCreate\Queries\UserCreateQuery;
 use App\Http\Exceptions\AppHttpException;
 use App\Http\Requests\UserCreateRequest;
+use App\Jobs\SendVerificationEmailJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,7 +46,7 @@ class UserCreateService
 
         // メール設定がある場合のみメール認証通知を送る
         if (! empty(config('mail.mailers.smtp.username'))) {
-            $loginInfoModel->sendEmailVerificationNotification();
+            SendVerificationEmailJob::dispatch($loginInfoModel);
         }
 
         // ファイル保存
@@ -77,7 +78,7 @@ class UserCreateService
         $this->storeUserFile($params, $request);
 
         if ($params->userImg !== $params->imgOldname) {
-            Storage::delete('public/'.$params->imgOldname);
+            Storage::delete('public/' . $params->imgOldname);
         }
 
         // 更新後のユーザーデータを取得

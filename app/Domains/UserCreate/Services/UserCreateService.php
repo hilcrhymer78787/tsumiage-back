@@ -46,7 +46,12 @@ class UserCreateService
 
         // メール設定がある場合のみメール認証通知を送る
         if (! empty(config('mail.mailers.smtp.username'))) {
-            SendVerificationEmailJob::dispatch($loginInfoModel);
+            if (!app()->environment('local')) {
+                SendVerificationEmailJob::dispatch($loginInfoModel);
+            } else {
+                // TODO: 本番環境でもredisしたい
+                $loginInfoModel->sendEmailVerificationNotification();
+            }
         }
 
         // ファイル保存

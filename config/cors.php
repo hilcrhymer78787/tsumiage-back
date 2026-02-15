@@ -14,6 +14,7 @@ return [
         'https://stg-tsumiage.magicgifted.com',
         'http://localhost:3000',
         'http://localhost:3001',
+        'http://localhost:3002',
         'http://3.105.106.52',
         'http://tsumiage.online',
         'https://tsumiage.online',
